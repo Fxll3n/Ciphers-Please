@@ -1,0 +1,5 @@
+[gd_resource type="GDScript" format=3 uid="uid://djwjpuhp64xvk"]
+
+[resource]
+script/source = "extends Resource
+"
