@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=3 uid="uid://wpohwax5wyl"]
+
+[ext_resource type="Shader" path="res://scripts/objects/clock.gdshader" id="1_q5ht4"]
+[ext_resource type="Script" path="res://scripts/objects/clock.gd" id="1_scwsm"]
+[ext_resource type="ArrayMesh" uid="uid://c5f2lffvfx6ca" path="res://assets/meshes/ugly_clock.obj" id="4_bgt57"]
+[ext_resource type="Texture2D" uid="uid://4mcfop2bdjrv" path="res://assets/clock_digit.png" id="4_drvff"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wgcjj"]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wjto6"]
+resource_local_to_scene = true
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 6.93
+emission_operator = 1
+emission_texture = SubResource("ViewportTexture_wgcjj")
+
+[sub_resource type="QuadMesh" id="QuadMesh_3i3n6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5thrl"]
+resource_local_to_scene = true
+shader = ExtResource("1_q5ht4")
+shader_parameter/bits = 96
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7mv0"]
+resource_local_to_scene = true
+atlas = ExtResource("4_drvff")
+region = Rect2(0, 0, 80, 128)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kyu2f"]
+resource_local_to_scene = true
+shader = ExtResource("1_q5ht4")
+shader_parameter/bits = 218
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aj1sv"]
+shader = ExtResource("1_q5ht4")
+shader_parameter/bits = 242
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sr77b"]
+shader = ExtResource("1_q5ht4")
+shader_parameter/bits = 102
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8a6p"]
+atlas = ExtResource("4_drvff")
+region = Rect2(80, 0, 16, 128)
+
+[node name="Clock" type="Node3D"]
+script = ExtResource("1_scwsm")
+
+[node name="UglyClock" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999999, 0.000991102, -0.000613677, -0.000991724, 0.999999, -0.00102634, 0.000612671, 0.00102694, 0.999999, 4.58652e-06, 2.65688e-05, -1.16825e-05)
+mesh = ExtResource("4_bgt57")
+metadata/_edit_group_ = true
+
+[node name="ClockScreen" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.185494, 2.51014e-05, -4.01153e-05, -8.52084e-05, 0.0379243, 0.545545, 6.0939e-05, -0.023379, 0.884956, -1.97708e-05, 0.0227711, 0.0517782)
+material_override = SubResource("StandardMaterial3D_wjto6")
+mesh = SubResource("QuadMesh_3i3n6")
+metadata/_edit_group_ = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ColonTimer" type="Timer" parent="."]
+
+[node name="Viewport" type="SubViewport" parent="."]
+size = Vector2i(280, 100)
+
+[node name="ClockFace" type="Node2D" parent="Viewport"]
+
+[node name="Background" type="ColorRect" parent="Viewport/ClockFace"]
+offset_right = 336.0
+offset_bottom = 128.0
+color = Color(0, 0, 0, 1)
+
+[node name="Digits" type="Node2D" parent="Viewport/ClockFace"]
+
+[node name="Digit0" type="Sprite2D" parent="Viewport/ClockFace/Digits"]
+material = SubResource("ShaderMaterial_5thrl")
+position = Vector2(40, 64)
+texture = SubResource("AtlasTexture_c7mv0")
+region_rect = Rect2(0, 0, 80, 128)
+
+[node name="Digit1" type="Sprite2D" parent="Viewport/ClockFace/Digits"]
+material = SubResource("ShaderMaterial_kyu2f")
+position = Vector2(120, 64)
+texture = SubResource("AtlasTexture_c7mv0")
+region_rect = Rect2(1.4, 0, 0, 0)
+
+[node name="Digit2" type="Sprite2D" parent="Viewport/ClockFace/Digits"]
+material = SubResource("ShaderMaterial_aj1sv")
+position = Vector2(216, 64)
+texture = SubResource("AtlasTexture_c7mv0")
+region_rect = Rect2(1.4, 0, 0, 0)
+
+[node name="Digit3" type="Sprite2D" parent="Viewport/ClockFace/Digits"]
+material = SubResource("ShaderMaterial_sr77b")
+position = Vector2(296, 64)
+texture = SubResource("AtlasTexture_c7mv0")
+region_rect = Rect2(1.4, 0, 0, 0)
+
+[node name="Colons" type="Sprite2D" parent="Viewport/ClockFace"]
+position = Vector2(168, 64)
+texture = SubResource("AtlasTexture_f8a6p")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="ColonTimer" to="." method="_on_colon_timer_timeout"]
