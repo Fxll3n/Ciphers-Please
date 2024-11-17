@@ -1,11 +1,9 @@
 extends Camera3D
 class_name CustomCamera
 
+@export_group("Gameplay settings")
 @export_range(0, 180, 5, "radians") var maxFOV_x = deg_to_rad(90)
 @export_range(0, 180, 5, "radians") var maxFOV_y = deg_to_rad(40)
-@export var mouseSensitivity = Vector2(0.01, 0.01)
-@export var stickSensitivity = Vector2(3, 3)
-@export_range(0, 1, 0.05) var stickDeadzone = 0.15
 @onready var centerOfView = rotation
 
 ## Current state of the camera zoom/lock animation
@@ -30,6 +28,12 @@ enum State {FREE, ZOOM_IN, LOCKED, ZOOM_OUT}
 		$Reticle.visible = (new_state == State.FREE)
 		state = new_state
 
+@export_group("Controls")
+@export var mouseSensitivity = Vector2(0.2, 0.2)
+@export var stickSensitivity = Vector2(3, 3)
+@export var experimentalRotationSmoothing: bool = true
+@export_range(0, 1, 0.05) var stickDeadzone = 0.15
+
 ## List of global transforms to zoom back to
 var origins: Array[Transform3D] = []
 ## List of zoom targets (last one is focused)
@@ -40,16 +44,24 @@ func _ready() -> void:
 	if state == State.FREE:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+## Accumulator for relative mouse movement in-between physics ticks
+var mouseRelativeDelta := Vector2.ZERO
+
 func _input(event):
 	# Camera movement (clamped to maxFOV)
 	if event is InputEventMouseMotion and state == State.FREE:
-		_rotate_camera(event.relative * mouseSensitivity)
+		mouseRelativeDelta += event.relative
 
 func _physics_process(delta: float) -> void:
+	# Camera movement using mouse
+	if !mouseRelativeDelta.is_zero_approx():
+		_rotate_camera(mouseRelativeDelta * mouseSensitivity, delta)
+		mouseRelativeDelta = Vector2.ZERO
+	
 	# Camera movement using joystick
 	var stickInput = Vector2(Input.get_joy_axis(0, JOY_AXIS_LEFT_X), Input.get_joy_axis(0, JOY_AXIS_LEFT_Y))
 	if stickInput.length() > stickDeadzone:
-		_rotate_camera(stickInput * stickSensitivity * delta)
+		_rotate_camera(stickInput * stickSensitivity, delta)
 	
 	# Target picking, only works when camera is free
 	if state == State.FREE and Input.is_action_just_pressed("pick_object"):
@@ -67,10 +79,16 @@ func _physics_process(delta: float) -> void:
 		zoom_out()
 
 ## Rotate the camera within the maxFOV bounds
-func _rotate_camera(delta_rad: Vector2):
+func _rotate_camera(delta_rad: Vector2, time_delta: float):
 	if state == State.FREE:
-		rotation.y = clamp(rotation.y - delta_rad.x, centerOfView.y - maxFOV_x, centerOfView.y + maxFOV_x)
-		rotation.x = clamp(rotation.x - delta_rad.y, centerOfView.x - maxFOV_y, centerOfView.x + maxFOV_y)
+		var new_rot = Vector3(
+			clamp(rotation.x - time_delta * delta_rad.y, centerOfView.x - maxFOV_y, centerOfView.x + maxFOV_y),
+			clamp(rotation.y - time_delta * delta_rad.x, centerOfView.y - maxFOV_x, centerOfView.y + maxFOV_x),
+			rotation.z)
+		if experimentalRotationSmoothing:
+			get_tree().create_tween().tween_property(self, "rotation", new_rot, time_delta)
+		else:
+			rotation = new_rot
 
 ## Focus the camera on a new target
 func zoom_in(target: ZoomTarget3D) -> void:
