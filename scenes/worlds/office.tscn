@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=17 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="ArrayMesh" uid="uid://d1qysqwgx6sxj" path="res://assets/meshes/ugly_desk.obj" id="1_gxogq"]
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
 [ext_resource type="ArrayMesh" uid="uid://qtuljgcj0sgt" path="res://assets/meshes/ugly_computer.obj" id="2_hhivw"]
+[ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
 [ext_resource type="Script" path="res://scripts/CustomCamera.gd" id="3_fm5oh"]
 [ext_resource type="Script" path="res://scripts/objects/screen.gd" id="3_lbevc"]
 [ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://terminal.tscn" id="4_gf7xn"]
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
+[ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
 
@@ -20,6 +22,12 @@ albedo_texture = SubResource("ViewportTexture_2hrhl")
 [sub_resource type="BoxShape3D" id="BoxShape3D_k4xr5"]
 size = Vector3(0.363, 0.32, 0)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_etegk"]
+size = Vector3(0.456055, 0.552246, 0.487793)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c1hv4"]
+size = Vector3(0.21, 0.0619507, 0.17)
+
 [sub_resource type="Environment" id="Environment_43qhm"]
 ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
@@ -31,17 +39,45 @@ glow_enabled = true
 script = ExtResource("1_oqg2a")
 
 [node name="PlayerCam" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.963616, 0.267289, 0, -0.267289, 0.963616, 0, 1.06637, -0.339124)
+transform = Transform3D(1, 0, 0, 0, 0.999657, 0.0261947, 0, -0.0261947, 0.999657, 0, 1.06637, -0.339124)
 current = true
 script = ExtResource("3_fm5oh")
+maxFOV_x = 1.22173
+maxFOV_y = 0.523599
+
+[node name="ObjectPickerRay" type="RayCast3D" parent="PlayerCam"]
+target_position = Vector3(0, 0, -2)
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Reticle" type="TextureRect" parent="PlayerCam"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_70pis")
 
 [node name="UglyDesk" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000833988, 5.96046e-08, -1.07788)
 mesh = ExtResource("1_gxogq")
 
-[node name="UglyComputer" type="MeshInstance3D" parent="."]
+[node name="UglyComputer" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.313509, 0.737078, -1.09798)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+
+[node name="Mesh3D" type="MeshInstance3D" parent="UglyComputer"]
 mesh = ExtResource("2_hhivw")
+skeleton = NodePath("../..")
 
 [node name="Screen" type="Area3D" parent="UglyComputer"]
 script = ExtResource("3_lbevc")
@@ -53,7 +89,7 @@ script = ExtResource("3_lbevc")
 [node name="QuadMesh" type="MeshInstance3D" parent="UglyComputer/Screen"]
 transform = Transform3D(0.362647, 0, 0, 0, 0.311693, 0.228051, 0, -0.0709981, 1.00118, 0, 0.36647, 0.171311)
 mesh = SubResource("QuadMesh_hih8b")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../Mesh3D")
 surface_material_override/0 = SubResource("StandardMaterial3D_c2vu2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="UglyComputer/Screen"]
@@ -65,8 +101,27 @@ shape = SubResource("BoxShape3D_k4xr5")
 transform = Transform3D(1, 0, 0, 0, 0.97437, 0.224951, 0, -0.224951, 0.97437, 0, 0.423, 0.412)
 visible = false
 
-[node name="Clock" parent="." instance=ExtResource("6_4jp77")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UglyComputer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0102539, 0.295166, 0.013916)
+visible = false
+shape = SubResource("BoxShape3D_etegk")
+
+[node name="ClockArea" type="Area3D" parent="."]
 transform = Transform3D(0.803691, 0, 0.595047, 0, 1, 0, -0.595047, 0, 0.803691, -0.428026, 0.746152, -0.937772)
+
+[node name="ClockMesh" parent="ClockArea" instance=ExtResource("6_4jp77")]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClockArea"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0.0315247, 0)
+shape = SubResource("BoxShape3D_c1hv4")
+
+[node name="ZoomTarget3D" type="Node3D" parent="ClockArea"]
+visible = false
+script = ExtResource("6_pma3h")
+
+[node name="Camera3D" type="Camera3D" parent="ClockArea/ZoomTarget3D"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 0.939693, 0.34202, -2.98023e-08, -0.34202, 0.939693, 2.98023e-08, 0.085, 0.18)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 3, 3)

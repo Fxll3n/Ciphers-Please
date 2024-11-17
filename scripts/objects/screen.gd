@@ -10,7 +10,7 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouse:
 		return
-	if event.is_action("debug_toggle_capture"):
+	if event.is_action("go_back"):
 		return
 	$Viewport.push_input(event)
 
