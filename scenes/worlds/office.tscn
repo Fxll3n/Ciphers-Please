@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://db6r5vgdyr66y"]
+
+[ext_resource type="ArrayMesh" uid="uid://d1qysqwgx6sxj" path="res://assets/meshes/ugly_desk.obj" id="1_gxogq"]
+[ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
+[ext_resource type="ArrayMesh" uid="uid://qtuljgcj0sgt" path="res://assets/meshes/ugly_computer.obj" id="2_hhivw"]
+[ext_resource type="Script" path="res://scripts/CustomCamera.gd" id="3_fm5oh"]
+[ext_resource type="Script" path="res://scripts/objects/screen.gd" id="3_lbevc"]
+[ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://terminal.tscn" id="4_gf7xn"]
+[ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2hrhl"]
+viewport_path = NodePath("UglyComputer/Screen/Viewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c2vu2"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_2hrhl")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k4xr5"]
+size = Vector3(0.363, 0.32, 0)
+
+[sub_resource type="Environment" id="Environment_43qhm"]
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.4
+ambient_light_energy = 0.5
+glow_enabled = true
+
+[node name="Office" type="Node3D"]
+script = ExtResource("1_oqg2a")
+
+[node name="PlayerCam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.963616, 0.267289, 0, -0.267289, 0.963616, 0, 1.06637, -0.339124)
+current = true
+script = ExtResource("3_fm5oh")
+
+[node name="UglyDesk" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000833988, 5.96046e-08, -1.07788)
+mesh = ExtResource("1_gxogq")
+
+[node name="UglyComputer" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.313509, 0.737078, -1.09798)
+mesh = ExtResource("2_hhivw")
+
+[node name="Screen" type="Area3D" parent="UglyComputer"]
+script = ExtResource("3_lbevc")
+
+[node name="Viewport" type="SubViewport" parent="UglyComputer/Screen"]
+
+[node name="Terminal" parent="UglyComputer/Screen/Viewport" instance=ExtResource("4_gf7xn")]
+
+[node name="QuadMesh" type="MeshInstance3D" parent="UglyComputer/Screen"]
+transform = Transform3D(0.362647, 0, 0, 0, 0.311693, 0.228051, 0, -0.0709981, 1.00118, 0, 0.36647, 0.171311)
+mesh = SubResource("QuadMesh_hih8b")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_c2vu2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UglyComputer/Screen"]
+transform = Transform3D(1, 0, 0, 0, 0.975026, 0.222093, 0, -0.222093, 0.975026, 0, 0.36647, 0.171311)
+visible = false
+shape = SubResource("BoxShape3D_k4xr5")
+
+[node name="ScreenCam" type="Camera3D" parent="UglyComputer/Screen"]
+transform = Transform3D(1, 0, 0, 0, 0.97437, 0.224951, 0, -0.224951, 0.97437, 0, 0.423, 0.412)
+visible = false
+
+[node name="Clock" parent="." instance=ExtResource("6_4jp77")]
+transform = Transform3D(0.803691, 0, 0.595047, 0, 1, 0, -0.595047, 0, 0.803691, -0.428026, 0.746152, -0.937772)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 3, 3)
+light_color = Color(0.61, 0.5734, 0.488, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_43qhm")
+
+[connection signal="area_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_entered"]
+[connection signal="area_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_exited"]
+[connection signal="input_event" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_input_event"]
+[connection signal="mouse_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_exited"]

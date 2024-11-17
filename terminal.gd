@@ -4,6 +4,9 @@ extends Control
 @onready var transmission_text: RichTextLabel = $"TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer/TransmissionText"
 @onready var notes_text: RichTextLabel = $"TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer/NotesText"
 
+## Emitted when the terminal is closed
+signal terminal_closed
+
 
 var loaded_task = func():
 	var task = load("res://scripts/CurrentTask/CurrentTask.tres")
@@ -29,4 +32,4 @@ func _process(delta: float) -> void:
 	transmission_text.text = task.text
 
 func _on_exit_pressed() -> void:
-	pass # Replace with leaving terminal code
+	terminal_closed.emit()

@@ -15,3 +15,5 @@ addons/project-time-tracker/TrackerSectionColor.gd
 addons/project-time-tracker/TrackerSectionColor.tscn
 project_time_traker.json
 ptt.json
+
+.vscode
