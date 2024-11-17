@@ -1,6 +1,10 @@
 extends Control
 
 
+@onready var transmission_text: RichTextLabel = $"TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer/TransmissionText"
+@onready var notes_text: RichTextLabel = $"TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer/NotesText"
+
+
 var loaded_task = func():
 	var task = load("res://scripts/CurrentTask/CurrentTask.tres")
 	
@@ -17,8 +21,12 @@ var loaded_task = func():
 	else:
 		return task as EmptyTask
 
+func _ready() -> void:
+	ResourceSaver.save(EmptyTask.new(), "res://scripts/CurrentTask/CurrentTask.tres")
 
-
+func _process(delta: float) -> void:
+	var task = loaded_task.call()
+	transmission_text.text = task.text
 
 func _on_exit_pressed() -> void:
 	pass # Replace with leaving terminal code

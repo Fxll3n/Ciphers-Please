@@ -14,7 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qowvr")
 
-[node name="VSplitContainer" type="VSplitContainer" parent="."]
+[node name="TabBarSplit" type="VSplitContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,10 +24,10 @@ grow_vertical = 2
 split_offset = 30
 dragger_visibility = 2
 
-[node name="Panel" type="Panel" parent="VSplitContainer"]
+[node name="Panel" type="Panel" parent="TabBarSplit"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabBarSplit/Panel"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -42,37 +42,39 @@ grow_horizontal = 0
 grow_vertical = 2
 alignment = 2
 
-[node name="Size" type="Button" parent="VSplitContainer/Panel/HBoxContainer"]
+[node name="Size" type="Button" parent="TabBarSplit/Panel/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Minimize" type="Button" parent="VSplitContainer/Panel/HBoxContainer"]
+[node name="Minimize" type="Button" parent="TabBarSplit/Panel/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Exit" type="Button" parent="VSplitContainer/Panel/HBoxContainer"]
+[node name="Exit" type="Button" parent="TabBarSplit/Panel/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer"]
+[node name="MainSplit" type="HSplitContainer" parent="TabBarSplit"]
 layout_mode = 2
 split_offset = 700
+dragger_visibility = 2
 
-[node name="VSplitContainer" type="VSplitContainer" parent="VSplitContainer/HSplitContainer"]
+[node name="TransmisionSplit" type="VSplitContainer" parent="TabBarSplit/MainSplit"]
 layout_mode = 2
 split_offset = 300
+dragger_visibility = 2
 
-[node name="Panel" type="Panel" parent="VSplitContainer/HSplitContainer/VSplitContainer"]
+[node name="Section 1" type="Panel" parent="TabBarSplit/MainSplit/TransmisionSplit"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nfhgd")
 
-[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/HSplitContainer/VSplitContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -84,17 +86,115 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VSplitContainer/HSplitContainer/VSplitContainer/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer"]
+layout_mode = 2
+
+[node name="TransmissionHeading" type="RichTextLabel" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 bbcode_enabled = true
-text = "[font_size=30]Transmission:"
+text = "[code][font_size=30]Transmission:[/font_size]"
+scroll_active = false
 
-[node name="Panel2" type="Panel" parent="VSplitContainer/HSplitContainer/VSplitContainer"]
+[node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TransmissionText" type="RichTextLabel" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 229)
+layout_mode = 2
+
+[node name="Section 2" type="Panel" parent="TabBarSplit/MainSplit/TransmisionSplit"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nfhgd")
 
-[node name="Panel2" type="Panel" parent="VSplitContainer/HSplitContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer"]
+layout_mode = 2
+
+[node name="UserEntryHeading" type="RichTextLabel" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+bbcode_enabled = true
+text = "[code][font_size=30]User Entry
+"
+scroll_active = false
+
+[node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 235)
+layout_mode = 2
+placeholder_text = "<ENTER ANSWER>"
+
+[node name="Section 3" type="Panel" parent="TabBarSplit/MainSplit"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nfhgd")
 
-[connection signal="pressed" from="VSplitContainer/Panel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[node name="MarginContainer" type="MarginContainer" parent="TabBarSplit/MainSplit/Section 3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabBarSplit/MainSplit/Section 3/MarginContainer"]
+layout_mode = 2
+
+[node name="NotesHeading" type="RichTextLabel" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+bbcode_enabled = true
+text = "[code][font_size=30]Notes:"
+scroll_active = false
+
+[node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NotesText" type="RichTextLabel" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 534)
+layout_mode = 2
+text = "test
+
+
+
+
+test
+
+
+
+test
+
+
+test
+
+
+test
+
+
+test
+
+
+test
+
+
+tes"
+
+[connection signal="pressed" from="TabBarSplit/Panel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]

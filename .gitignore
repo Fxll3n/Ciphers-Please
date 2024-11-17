@@ -1,3 +1,17 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+addons/project-time-tracker/icon.png
+addons/project-time-tracker/icon.png.import
+addons/project-time-tracker/LICENSE
+addons/project-time-tracker/plugin.cfg
+addons/project-time-tracker/project-time-tracker.gd
+addons/project-time-tracker/SectionGraph.gd
+addons/project-time-tracker/TrackerDock.gd
+addons/project-time-tracker/TrackerDock.tscn
+addons/project-time-tracker/TrackerSection.gd
+addons/project-time-tracker/TrackerSection.tscn
+addons/project-time-tracker/TrackerSectionColor.gd
+addons/project-time-tracker/TrackerSectionColor.tscn
+project_time_traker.json
+ptt.json

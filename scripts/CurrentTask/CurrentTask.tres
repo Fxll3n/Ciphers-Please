@@ -1,5 +1,6 @@
-[gd_resource type="GDScript" format=3 uid="uid://djwjpuhp64xvk"]
+[gd_resource type="Resource" script_class="EmptyTask" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/EmptyTask.gd" id="1_lbdgf"]
 
 [resource]
-script/source = "extends Resource
-"
+script = ExtResource("1_lbdgf")
