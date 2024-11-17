@@ -78,13 +78,14 @@ func _on_colon_timer_timeout() -> void:
 ## Set the time to display on the clock
 func set_time(minutes: int) -> void:
 	assert(minutes <= (99 * 60 + 99))
-	var str: String = '%2d%02d' % [minutes / 60, minutes % 60];
+	@warning_ignore("integer_division")
+	var text: String = '%2d%02d' % [minutes / 60, minutes % 60];
 	for i in range(0, 4):
-		set_char(i, str[i])
+		set_char(i, text[i])
 
 ## Set the character to display on one clock digit
-func set_char(index: int, char: String) -> void:
+func set_char(index: int, character: String) -> void:
 	assert(index < 4);
 	var sprite = $Viewport/ClockFace/Digits.get_child(index) as Node2D;
 	if sprite and sprite.material:
-		sprite.material.set_shader_parameter('bits', CHAR_TO_BITS[char])
+		sprite.material.set_shader_parameter('bits', CHAR_TO_BITS[character])

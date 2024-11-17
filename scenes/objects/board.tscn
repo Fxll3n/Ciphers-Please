@@ -1,0 +1,47 @@
+[gd_scene load_steps=10 format=3 uid="uid://o6k4mux2ha8b"]
+
+[ext_resource type="ArrayMesh" uid="uid://elx0pangoktx" path="res://assets/meshes/ugly_board.obj" id="1_sj5gh"]
+[ext_resource type="Texture2D" uid="uid://dfrqwph1rwlv2" path="res://assets/cork.png" id="2_5040n"]
+[ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="3_j76n3"]
+
+[sub_resource type="Gradient" id="Gradient_2s0bw"]
+offsets = PackedFloat32Array(0.114007, 0.85342)
+colors = PackedColorArray(0, 0, 0, 0.145098, 0, 0, 0, 0.45098)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hghg6"]
+noise_type = 3
+frequency = 0.1178
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_liugq"]
+color_ramp = SubResource("Gradient_2s0bw")
+noise = SubResource("FastNoiseLite_hghg6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkjk2"]
+transparency = 1
+albedo_texture = SubResource("NoiseTexture2D_liugq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yalgf"]
+next_pass = SubResource("StandardMaterial3D_jkjk2")
+albedo_texture = ExtResource("2_5040n")
+uv1_scale = Vector3(3, 4, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bab3o"]
+size = Vector3(0.6, 0.8, 0)
+
+[node name="Board" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.351632, 1.29097, -1.36826)
+input_ray_pickable = false
+script = ExtResource("3_j76n3")
+
+[node name="UglyBoard" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_sj5gh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_yalgf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("BoxShape3D_bab3o")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.54)
+visible = false

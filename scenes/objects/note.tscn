@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq1qnbe5se5f5"]
+
+[ext_resource type="Script" path="res://scripts/objects/note.gd" id="1_1tmab"]
+[ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="1_r0ee2"]
+[ext_resource type="Shader" path="res://scripts/objects/note.gdshader" id="2_m3sbc"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_rfww2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qkwe2"]
+render_priority = 0
+shader = ExtResource("2_m3sbc")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i7p4x"]
+size = Vector3(0.1, 0.1, 0)
+
+[node name="Note" type="Area3D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_1tmab")
+
+[node name="Quad" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("QuadMesh_rfww2")
+surface_material_override/0 = SubResource("ShaderMaterial_qkwe2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_i7p4x")
+
+[node name="ZoomTarget3D" type="Node3D" parent="."]
+script = ExtResource("1_r0ee2")
+
+[node name="Camera3D" type="Camera3D" parent="ZoomTarget3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.07)
+visible = false
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

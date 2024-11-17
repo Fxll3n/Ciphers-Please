@@ -15,6 +15,7 @@ var target_transform: Transform3D:
 
 ## Emitted to signal that the camera should leave
 ## Autoconnected when a camera locks on this target
+@warning_ignore("unused_signal")
 signal zoom_out
 
 ## Whether the camera is locked on this target

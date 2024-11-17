@@ -18,7 +18,7 @@ enum State {FREE, ZOOM_IN, LOCKED, ZOOM_OUT}
 			State.FREE:
 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			State.ZOOM_IN, State.ZOOM_OUT:
-				Input.mouse_mode = Input.MOUSE_MODE_CONFINED_HIDDEN
+				Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 				# Remove focus from current target if any
 				if not targets.is_empty():
 					targets.back().focused = false
@@ -93,6 +93,7 @@ func _rotate_camera(delta_rad: Vector2, time_delta: float):
 ## Focus the camera on a new target
 func zoom_in(target: ZoomTarget3D) -> void:
 	assert(state == State.FREE or state == State.LOCKED)
+	state = State.ZOOM_IN
 	
 	# Store current position and target destination
 	origins.push_back(global_transform)
@@ -100,7 +101,6 @@ func zoom_in(target: ZoomTarget3D) -> void:
 	var destination := target.target_transform
 	
 	# Hide cursor and animate translation
-	state = State.ZOOM_IN
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_transform", destination, 1).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(self._zoom_finished)
@@ -113,8 +113,9 @@ func zoom_out(target_level: int = -1) -> void:
 		target_level = origins.size() + target_level
 	assert(0 <= target_level and target_level < origins.size())
 	
-	# Hide cursor and animate translation
 	state = State.ZOOM_OUT
+	
+	# Hide cursor and animate translation
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_transform", origins[target_level], 1).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(self._zoom_finished)
