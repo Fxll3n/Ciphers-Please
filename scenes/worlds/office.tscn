@@ -72,7 +72,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000833988, 5.96046e-08, -1
 mesh = ExtResource("1_gxogq")
 
 [node name="UglyComputer" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.313509, 0.737078, -1.09798)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.737, -1.098)
 collision_layer = 2
 collision_mask = 2
 input_ray_pickable = false
@@ -100,7 +100,7 @@ visible = false
 shape = SubResource("BoxShape3D_k4xr5")
 
 [node name="ScreenCam" type="Camera3D" parent="UglyComputer/Screen"]
-transform = Transform3D(1, 0, 0, 0, 0.97437, 0.224951, 0, -0.224951, 0.97437, 0, 0.423, 0.412)
+transform = Transform3D(1, 0, 0, 0, 0.97437, 0.224951, 0, -0.224951, 0.97437, 0, 0.423, 0.457)
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="UglyComputer"]
@@ -112,7 +112,7 @@ shape = SubResource("BoxShape3D_etegk")
 transform = Transform3D(0.803691, 0, 0.595047, 0, 1, 0, -0.595047, 0, 0.803691, -0.428026, 0.746152, -0.937772)
 
 [node name="ClockMesh" parent="ClockArea" instance=ExtResource("6_4jp77")]
-transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+transform = Transform3D(0.996738, 0, -0.0807035, 0, 1, 0, 0.0807035, 0, 0.996738, 0.00494283, 0, -0.256519)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClockArea"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0.0315247, 0)
@@ -133,7 +133,7 @@ light_color = Color(0.61, 0.5734, 0.488, 1)
 environment = SubResource("Environment_43qhm")
 
 [node name="Board" parent="." instance=ExtResource("10_n5ycv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.346916, 1.32195, -1.3677)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.810896, 1.32195, -1.3677)
 
 [node name="Note" parent="Board" instance=ExtResource("11_mrcuc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.178459, 0.296979, 0.000570774)

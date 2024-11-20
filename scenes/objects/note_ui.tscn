@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://x2tom3xqp3gx"]
+
+[ext_resource type="Texture2D" uid="uid://cfxdxj5estx6a" path="res://assets/note_9patch.png" id="1_1ll6m"]
+[ext_resource type="FontFile" uid="uid://dnkeqwoqftiar" path="res://assets/fonts/veteran typewriter.ttf" id="2_ooi4l"]
+[ext_resource type="Texture2D" uid="uid://x2h54ar61uk3" path="res://assets/stamps.png" id="3_7d7qk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8bbjo"]
+font = ExtResource("2_ooi4l")
+font_size = 24
+font_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kauam"]
+atlas = ExtResource("3_7d7qk")
+region = Rect2(0, 0, 512, 265)
+
+[node name="NoteUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 512.0
+offset_bottom = 720.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_1ll6m")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 104.0
+offset_right = 472.0
+offset_bottom = 328.0
+text = "From: Igor Placeholder
+
+Cipher: CAESAR
+
+Difficulty: 1            Reward: 22¢
+
+-- CONFIDENTIAL MESSAGE BELOW --
+
+Key: 13
+
+If you read this you're fired"
+label_settings = SubResource("LabelSettings_8bbjo")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 264.0
+offset_right = 511.0
+offset_bottom = 128.0
+texture = SubResource("AtlasTexture_kauam")
+expand_mode = 1
+stretch_mode = 5

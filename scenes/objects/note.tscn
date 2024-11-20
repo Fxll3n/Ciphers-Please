@@ -1,17 +1,93 @@
-[gd_scene load_steps=7 format=3 uid="uid://dq1qnbe5se5f5"]
+[gd_scene load_steps=9 format=3 uid="uid://dq1qnbe5se5f5"]
 
 [ext_resource type="Script" path="res://scripts/objects/note.gd" id="1_1tmab"]
 [ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="1_r0ee2"]
-[ext_resource type="Shader" path="res://scripts/objects/note.gdshader" id="2_m3sbc"]
+[ext_resource type="PackedScene" uid="uid://x2tom3xqp3gx" path="res://scenes/objects/note_ui.tscn" id="3_8k4ao"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_rfww2"]
+size = Vector2(0.105, 0.148)
+subdivide_depth = 64
+center_offset = Vector3(0, -0.021, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qkwe2"]
+[sub_resource type="Shader" id="Shader_ac4n0"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_prepass_alpha, cull_disabled, diffuse_burley, specular_schlick_ggx;
+
+uniform float y_fold = -0.052;
+uniform float fold_rad = 0.0;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+	if (VERTEX.y < y_fold)
+	{
+		float offset = y_fold - VERTEX.y;
+		VERTEX.y -= cos(fold_rad) * offset - offset;
+		VERTEX.z += sin(fold_rad) * offset;
+	}
+}
+
+void fragment() {
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	if (FRONT_FACING)
+		ALBEDO = albedo.rgb * albedo_tex.rgb;
+	else
+		ALBEDO = vec3(0.84, 0.84, 0.76);
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	ALPHA *= albedo.a * albedo_tex.a;
+}
+"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qyned"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6nitg"]
+resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("2_m3sbc")
+shader = SubResource("Shader_ac4n0")
+shader_parameter/y_fold = -0.052
+shader_parameter/fold_rad = 2.53
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = SubResource("ViewportTexture_qyned")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i7p4x"]
-size = Vector3(0.1, 0.1, 0)
+size = Vector3(0.11, 0.11, 0)
 
 [node name="Note" type="Area3D"]
 collision_layer = 4
@@ -19,9 +95,8 @@ collision_mask = 4
 script = ExtResource("1_1tmab")
 
 [node name="Quad" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = SubResource("QuadMesh_rfww2")
-surface_material_override/0 = SubResource("ShaderMaterial_qkwe2")
+surface_material_override/0 = SubResource("ShaderMaterial_6nitg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_i7p4x")
@@ -30,7 +105,13 @@ shape = SubResource("BoxShape3D_i7p4x")
 script = ExtResource("1_r0ee2")
 
 [node name="Camera3D" type="Camera3D" parent="ZoomTarget3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.07)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.125)
 visible = false
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(512, 720)
+
+[node name="NoteUI" parent="SubViewport" instance=ExtResource("3_8k4ao")]
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
