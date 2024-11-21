@@ -1,7 +1,8 @@
 extends Node
+class_name Cipher
 const alphabet = "abcdefghjklmnopqrstuvwxyz"
 
-func encryptCeasar(plaintext: String, shifts: int) -> String:
+static func encryptCaesar(plaintext: String, shifts: int) -> String:
 	var ciphertext = ""
 	
 	for letter in plaintext:
@@ -16,7 +17,7 @@ func encryptCeasar(plaintext: String, shifts: int) -> String:
 	
 	return ciphertext
 
-func encryptAtbash(plaintext: String) -> String:
+static func encryptAtbash(plaintext: String) -> String:
 	var ciphertext = ""
 	
 	for letter in plaintext:
@@ -30,7 +31,7 @@ func encryptAtbash(plaintext: String) -> String:
 	
 	return ciphertext
 
-func encryptVigenere(plaintext: String, key: String) -> String:
+static func encryptVigenere(plaintext: String, key: String) -> String:
 	var ciphertext = ""
 	plaintext = plaintext.to_lower()
 	key = key.to_lower()
@@ -41,7 +42,7 @@ func encryptVigenere(plaintext: String, key: String) -> String:
 		ciphertext += alphabet[new_pos]
 	return ciphertext
 
-func encryptRail(plaintext: String, rails: int) -> String:
+static func encryptRail(plaintext: String, rails: int) -> String:
 	if rails <= 1:
 		return plaintext
 
@@ -54,8 +55,8 @@ func encryptRail(plaintext: String, rails: int) -> String:
 	var current_rail = 0
 	var direction_down = true
 	
-	for char in plaintext:
-		rail_lines[current_rail] += char
+	for character in plaintext:
+		rail_lines[current_rail] += character
 		
 		if current_rail == 0:
 			direction_down = true
@@ -66,7 +67,7 @@ func encryptRail(plaintext: String, rails: int) -> String:
 	
 	return "".join(rail_lines)
 
-func encryptPigPen(plaintext: String) -> String:
+static func encryptPigPen(plaintext: String) -> String:
 	var symbols = {
 		"a": "⊓", "b": "⊐", "c": "⊏", "d": "⊒",
 		"e": "∠", "f": "∟", "g": "⊥", "h": "⊢",

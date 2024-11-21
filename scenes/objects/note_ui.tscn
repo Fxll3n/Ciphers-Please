@@ -10,6 +10,7 @@ font_size = 24
 font_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kauam"]
+resource_local_to_scene = true
 atlas = ExtResource("3_7d7qk")
 region = Rect2(0, 0, 512, 265)
 

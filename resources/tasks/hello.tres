@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://c1supyk4ooei7"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_nrijm"]
+
+[resource]
+script = ExtResource("1_nrijm")
+msg = "HELLO"
+msg_type = 1
+from_to = "Zeroji"
+difficulty = 0
+pay = 1
+key = "2"
+cipher_type = 1

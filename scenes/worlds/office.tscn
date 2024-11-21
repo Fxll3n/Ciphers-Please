@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=20 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="ArrayMesh" uid="uid://d1qysqwgx6sxj" path="res://assets/meshes/ugly_desk.obj" id="1_gxogq"]
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
 [ext_resource type="PackedScene" uid="uid://o6k4mux2ha8b" path="res://scenes/objects/board.tscn" id="10_n5ycv"]
 [ext_resource type="PackedScene" uid="uid://dq1qnbe5se5f5" path="res://scenes/objects/note.tscn" id="11_mrcuc"]
+[ext_resource type="Resource" uid="uid://c1supyk4ooei7" path="res://resources/tasks/hello.tres" id="12_8ie5s"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
 
@@ -137,6 +138,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.810896, 1.32195, -1.3677)
 
 [node name="Note" parent="Board" instance=ExtResource("11_mrcuc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.178459, 0.296979, 0.000570774)
+task = ExtResource("12_8ie5s")
+folded = false
 
 [node name="Note2" parent="Board" instance=ExtResource("11_mrcuc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1666, 0.255757, 0.00378549)

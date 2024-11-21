@@ -7,29 +7,14 @@ extends Control
 ## Emitted when the terminal is closed
 signal terminal_closed
 
-
-var loaded_task = func():
-	var task = load("res://scripts/CurrentTask/CurrentTask.tres")
-	
-	if task as CeasarTask:
-		return task as CeasarTask
-	elif task as AtbashTask:
-		return task as AtbashTask
-	elif task as VigenereTask:
-		return task as VigenereTask
-	elif task as PigPenTask:
-		return task as PigPenTask
-	elif task as RailTask:
-		return task as RailTask
-	else:
-		return task as EmptyTask
+## Load a new task into the terminal
+func load_task(task_path: String) -> void:
+	var task = load(task_path) as Task
+	assert(task != null)
+	transmission_text.text = task.input_text
 
 func _ready() -> void:
-	ResourceSaver.save(EmptyTask.new(), "res://scripts/CurrentTask/CurrentTask.tres")
-
-func _process(delta: float) -> void:
-	var task = loaded_task.call()
-	transmission_text.text = task.text
+	load_task("res://resources/tasks/hello.tres")
 
 func _on_exit_pressed() -> void:
 	terminal_closed.emit()
