@@ -8,13 +8,9 @@ extends Control
 signal terminal_closed
 
 ## Load a new task into the terminal
-func load_task(task_path: String) -> void:
-	var task = load(task_path) as Task
+func load_task(task: Task) -> void:
 	assert(task != null)
 	transmission_text.text = task.input_text
-
-func _ready() -> void:
-	load_task("res://resources/tasks/hello.tres")
 
 func _on_exit_pressed() -> void:
 	terminal_closed.emit()

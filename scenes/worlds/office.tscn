@@ -69,6 +69,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_70pis")
 
+[node name="PickedNotePlaceholder" type="Node3D" parent="PlayerCam"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, -0.05, -0.15)
+
 [node name="UglyDesk" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000833988, 5.96046e-08, -1.07788)
 mesh = ExtResource("1_gxogq")
@@ -110,6 +113,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0102539, 0.295166, 0.013916
 visible = false
 shape = SubResource("BoxShape3D_etegk")
 
+[node name="NotePlaceholder" type="Node3D" parent="UglyComputer"]
+transform = Transform3D(1, 0, 0, 0, 0.975281, 0.22097, 0, -0.22097, 0.975281, -0.243419, 0.458622, 0.177792)
+
 [node name="ClockArea" type="Area3D" parent="."]
 transform = Transform3D(0.803691, 0, 0.595047, 0, 1, 0, -0.595047, 0, 0.803691, -0.428026, 0.746152, -0.937772)
 
@@ -140,7 +146,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.810896, 1.32195, -1.3677)
 [node name="Note" parent="Board" instance=ExtResource("11_mrcuc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.178459, 0.296979, 0.000570774)
 task = ExtResource("12_8ie5s")
-folded = false
 
 [node name="Note2" parent="Board" instance=ExtResource("11_mrcuc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1666, 0.255757, 0.00378549)
@@ -153,8 +158,10 @@ stream = ExtResource("13_jvo82")
 autoplay = true
 bus = &"Music"
 
+[connection signal="focusing" from="PlayerCam" to="." method="_on_player_cam_focusing"]
 [connection signal="area_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_entered"]
 [connection signal="area_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_exited"]
 [connection signal="input_event" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_input_event"]
 [connection signal="mouse_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_exited"]
+[connection signal="note_picked" from="Board" to="." method="_on_board_note_picked"]

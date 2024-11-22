@@ -1,4 +1,4 @@
-extends Area3D
+class_name Note extends Area3D
 
 @export var task: Task
 @export var folded: bool = true
@@ -7,14 +7,14 @@ extends Area3D
 @onready var stampTexture = $SubViewport/NoteUI/TextureRect
 
 @onready var folded_angle_deg = randf_range(140, 175)
-@onready var unfolded_angle_deg = randf_range(5, 35)
+@onready var unfolded_angle_deg = randf_range(5, 20)
+
+signal note_clicked(note: Note)
 
 ## Focus this note when clicked if the parent target is focused
-func _on_input_event(camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if event.is_action_pressed("pick_object") and camera is CustomCamera:
-		var parent := get_parent_node_3d() as ZoomTarget3D
-		if parent == null or parent.focused:
-			(camera as CustomCamera).zoom_in($ZoomTarget3D)
+func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if event.is_action_pressed("pick_object"):
+		note_clicked.emit(self)
 
 func _ready() -> void:
 	# Initialise note UI based on task contents
@@ -55,5 +55,13 @@ func _ready() -> void:
 	else:
 		_set_fold_angle(unfolded_angle_deg)
 
-func _set_fold_angle(angle_deg):
+func _set_fold_angle(angle_deg) -> void:
 	$Quad.get_active_material(0).set_shader_parameter("fold_rad", deg_to_rad(angle_deg))
+
+func fold(time: float = 1.0) -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_method(_set_fold_angle, unfolded_angle_deg, folded_angle_deg, time).set_trans(Tween.TRANS_SINE)
+	
+func unfold(time: float = 1.0) -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_method(_set_fold_angle, folded_angle_deg, unfolded_angle_deg, time).set_trans(Tween.TRANS_SINE)
