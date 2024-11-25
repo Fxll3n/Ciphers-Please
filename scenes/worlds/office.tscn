@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=19 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="ArrayMesh" uid="uid://d1qysqwgx6sxj" path="res://assets/meshes/ugly_desk.obj" id="1_gxogq"]
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
@@ -10,8 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
 [ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
 [ext_resource type="PackedScene" uid="uid://o6k4mux2ha8b" path="res://scenes/objects/board.tscn" id="10_n5ycv"]
-[ext_resource type="PackedScene" uid="uid://dq1qnbe5se5f5" path="res://scenes/objects/note.tscn" id="11_mrcuc"]
-[ext_resource type="Resource" uid="uid://c1supyk4ooei7" path="res://resources/tasks/hello.tres" id="12_8ie5s"]
 [ext_resource type="AudioStream" uid="uid://djel1asqls3g1" path="res://assets/music/solvepuzzle.ogg" id="13_jvo82"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
@@ -116,21 +114,24 @@ shape = SubResource("BoxShape3D_etegk")
 [node name="NotePlaceholder" type="Node3D" parent="UglyComputer"]
 transform = Transform3D(1, 0, 0, 0, 0.975281, 0.22097, 0, -0.22097, 0.975281, -0.243419, 0.458622, 0.177792)
 
-[node name="ClockArea" type="Area3D" parent="."]
-transform = Transform3D(0.803691, 0, 0.595047, 0, 1, 0, -0.595047, 0, 0.803691, -0.428026, 0.746152, -0.937772)
+[node name="Clock" parent="." instance=ExtResource("6_4jp77")]
+transform = Transform3D(0.849092, 0, 0.528245, 0, 1, 0, -0.528245, 0, 0.849092, -0.576694, 0.746152, -1.14688)
+interval = 2.0
+increment = 5
 
-[node name="ClockMesh" parent="ClockArea" instance=ExtResource("6_4jp77")]
-transform = Transform3D(0.996738, 0, -0.0807035, 0, 1, 0, 0.0807035, 0, 0.996738, 0.00494283, 0, -0.256519)
+[node name="ClockArea" type="Area3D" parent="Clock"]
+transform = Transform3D(0.996738, 0, 0.0807035, 0, 1, 0, -0.0807035, 0, 0.996738, 0.0157753, 0, 0.256081)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ClockArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Clock/ClockArea"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0.0315247, 0)
 shape = SubResource("BoxShape3D_c1hv4")
 
-[node name="ZoomTarget3D" type="Node3D" parent="ClockArea"]
+[node name="ZoomTarget3D" type="Node3D" parent="Clock/ClockArea"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
 visible = false
 script = ExtResource("6_pma3h")
 
-[node name="Camera3D" type="Camera3D" parent="ClockArea/ZoomTarget3D"]
+[node name="Camera3D" type="Camera3D" parent="Clock/ClockArea/ZoomTarget3D"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 0.939693, 0.34202, -2.98023e-08, -0.34202, 0.939693, 2.98023e-08, 0.085, 0.18)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -143,20 +144,20 @@ environment = SubResource("Environment_43qhm")
 [node name="Board" parent="." instance=ExtResource("10_n5ycv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.810896, 1.32195, -1.3677)
 
-[node name="Note" parent="Board" instance=ExtResource("11_mrcuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.178459, 0.296979, 0.000570774)
-task = ExtResource("12_8ie5s")
-
-[node name="Note2" parent="Board" instance=ExtResource("11_mrcuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1666, 0.255757, 0.00378549)
-
-[node name="Note3" parent="Board" instance=ExtResource("11_mrcuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.156494, -0.0247135, 0.0100732)
-
 [node name="MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_jvo82")
 autoplay = true
 bus = &"Music"
+
+[node name="Black" type="ColorRect" parent="."]
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="focusing" from="PlayerCam" to="." method="_on_player_cam_focusing"]
 [connection signal="area_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_entered"]
@@ -164,4 +165,5 @@ bus = &"Music"
 [connection signal="input_event" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_input_event"]
 [connection signal="mouse_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_exited"]
+[connection signal="alarm_triggered" from="Clock" to="." method="_on_clock_alarm_triggered"]
 [connection signal="note_picked" from="Board" to="." method="_on_board_note_picked"]

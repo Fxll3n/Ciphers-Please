@@ -7,7 +7,7 @@ BUTLER=$(HOME)/bin/butler
 PROJECT=.
 OUT=$(HOME)/bin/ciphers-please
 # itch.io URL for publising builds
-ITCH_URL=isathese/ciphers-please
+ITCH_URL=isaacsand/ciphers-please
 
 SCENES=$(shell find -name '*.tscn')
 

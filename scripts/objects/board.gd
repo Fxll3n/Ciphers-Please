@@ -16,6 +16,9 @@ var note_origin_position: Transform3D
 		$UI/Buttons/PickTaskButton.visible = value
 		can_pick_tasks = value
 
+## Lists all available slots for attaching notes
+var available_slots: Array = range(0, 12)
+
 ## Emitted when a note is picked (using the Pick button)
 signal note_picked(Note)
 
@@ -72,3 +75,25 @@ func _on_pick_task_button_pressed() -> void:
 		$UI/Buttons.hide()
 		note.disconnect("note_picked", _on_note_clicked)
 		note_picked.emit(note)
+
+## Gets the (slightly randomized) transform for a certain board slot
+func _get_slot_transform(index: int) -> Transform3D:
+	var col = index % 3
+	var row = int(index / 3)
+	var x = (col - 1) * 0.60 / 4.0 + randf_range(-0.02, 0.02)
+	var y = (row - 1.5) * 0.80 / 5.0 + randf_range(-0.04, 0.04)
+	return Transform3D(Basis.IDENTITY, Vector3(x, y, 0.005))
+
+## Attach a new note to the board
+func attach_note(note: Note) -> void:
+	assert(available_slots.size() > 0)
+	var i = randi_range(0, available_slots.size() - 1)
+	var slot = available_slots[i]
+	available_slots.remove_at(i)
+	
+	if note.get_parent() == null:
+		add_child(note)
+	else:
+		note.reparent(self, false)
+	note.transform = _get_slot_transform(slot)
+	note.connect("note_clicked", _on_note_clicked)
