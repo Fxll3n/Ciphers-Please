@@ -1,33 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://o6k4mux2ha8b"]
+[gd_scene load_steps=7 format=3 uid="uid://o6k4mux2ha8b"]
 
-[ext_resource type="ArrayMesh" uid="uid://elx0pangoktx" path="res://assets/meshes/ugly_board.obj" id="1_sj5gh"]
+[ext_resource type="PackedScene" uid="uid://0dxwdi80c0g1" path="res://assets/scene_gltf/Board.glb" id="2_c4box"]
 [ext_resource type="Script" path="res://scripts/objects/board.gd" id="1_tl1rw"]
-[ext_resource type="Texture2D" uid="uid://dfrqwph1rwlv2" path="res://assets/cork.png" id="2_5040n"]
 [ext_resource type="AudioStream" uid="uid://dy525dbf8r1rl" path="res://assets/sfx/postitnotegrab.wav" id="4_e6vee"]
 
-[sub_resource type="Gradient" id="Gradient_2s0bw"]
-offsets = PackedFloat32Array(0.114007, 0.85342)
-colors = PackedColorArray(0, 0, 0, 0.145098, 0, 0, 0, 0.45098)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_hghg6"]
-noise_type = 3
-frequency = 0.1178
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_liugq"]
-color_ramp = SubResource("Gradient_2s0bw")
-noise = SubResource("FastNoiseLite_hghg6")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkjk2"]
-transparency = 1
-albedo_texture = SubResource("NoiseTexture2D_liugq")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yalgf"]
-next_pass = SubResource("StandardMaterial3D_jkjk2")
-albedo_texture = ExtResource("2_5040n")
-uv1_scale = Vector3(3, 4, 2)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_bab3o"]
-size = Vector3(0.6, 0.8, 0)
+size = Vector3(0.6, 0.8, 0.05)
 
 [sub_resource type="Theme" id="Theme_qj171"]
 default_font_size = 30
@@ -40,13 +18,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.351632, 1.29097, -1.36826)
 input_ray_pickable = false
 script = ExtResource("1_tl1rw")
 
-[node name="UglyBoard" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1_sj5gh")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_yalgf")
+[node name="BoardScene" parent="." instance=ExtResource("2_c4box")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-visible = false
 shape = SubResource("BoxShape3D_bab3o")
 
 [node name="Camera3D" type="Camera3D" parent="."]

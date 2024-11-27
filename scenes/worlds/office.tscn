@@ -1,11 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=17 format=3 uid="uid://db6r5vgdyr66y"]
 
-[ext_resource type="ArrayMesh" uid="uid://d1qysqwgx6sxj" path="res://assets/meshes/ugly_desk.obj" id="1_gxogq"]
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
-[ext_resource type="ArrayMesh" uid="uid://qtuljgcj0sgt" path="res://assets/meshes/ugly_computer.obj" id="2_hhivw"]
 [ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
 [ext_resource type="Script" path="res://scripts/CustomCamera.gd" id="3_fm5oh"]
 [ext_resource type="Script" path="res://scripts/objects/screen.gd" id="3_lbevc"]
+[ext_resource type="PackedScene" uid="uid://7qlggh5i3318" path="res://assets/scene_gltf/Scene.glb" id="4_7g7d6"]
 [ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://terminal.tscn" id="4_gf7xn"]
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
 [ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
@@ -13,19 +12,17 @@
 [ext_resource type="AudioStream" uid="uid://djel1asqls3g1" path="res://assets/music/solvepuzzle.ogg" id="13_jvo82"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
+size = Vector2(0.327, 0.29)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_2hrhl"]
-viewport_path = NodePath("UglyComputer/Screen/Viewport")
+viewport_path = NodePath("Screen/Viewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c2vu2"]
 resource_local_to_scene = true
 albedo_texture = SubResource("ViewportTexture_2hrhl")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k4xr5"]
-size = Vector3(0.363, 0.32, 0)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_etegk"]
-size = Vector3(0.456055, 0.552246, 0.487793)
+size = Vector3(0.327, 0.29, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1hv4"]
 size = Vector3(0.21, 0.0619507, 0.17)
@@ -39,13 +36,16 @@ glow_enabled = true
 
 [node name="Office" type="Node3D"]
 script = ExtResource("1_oqg2a")
+metadata/_edit_lock_ = true
 
 [node name="PlayerCam" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.999657, 0.0261947, 0, -0.0261947, 0.999657, 0, 1.06637, -0.339124)
+transform = Transform3D(1, 0, 0, 0, 0.999657, 0.0261947, 0, -0.0261947, 0.999657, 0, 1.06637, 0.823151)
+visible = false
 current = true
 script = ExtResource("3_fm5oh")
 maxFOV_x = 1.22173
 maxFOV_y = 0.523599
+metadata/_edit_group_ = true
 
 [node name="ObjectPickerRay" type="RayCast3D" parent="PlayerCam"]
 target_position = Vector3(0, 0, -2)
@@ -70,61 +70,49 @@ texture = ExtResource("3_70pis")
 [node name="PickedNotePlaceholder" type="Node3D" parent="PlayerCam"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, -0.05, -0.15)
 
-[node name="UglyDesk" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000833988, 5.96046e-08, -1.07788)
-mesh = ExtResource("1_gxogq")
+[node name="Scene" parent="." instance=ExtResource("4_7g7d6")]
 
-[node name="UglyComputer" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.737, -1.098)
-collision_layer = 2
-collision_mask = 2
-input_ray_pickable = false
-
-[node name="Mesh3D" type="MeshInstance3D" parent="UglyComputer"]
-mesh = ExtResource("2_hhivw")
-skeleton = NodePath("../..")
-
-[node name="Screen" type="Area3D" parent="UglyComputer"]
+[node name="Screen" type="Area3D" parent="."]
+transform = Transform3D(0.96, 0, 0, 0, 0.936143, 0.212687, 0, -0.212687, 0.936143, 0, 1.023, 0.026)
 script = ExtResource("3_lbevc")
+metadata/_edit_group_ = true
 
-[node name="Viewport" type="SubViewport" parent="UglyComputer/Screen"]
+[node name="Viewport" type="SubViewport" parent="Screen"]
 
-[node name="Terminal" parent="UglyComputer/Screen/Viewport" instance=ExtResource("4_gf7xn")]
+[node name="Terminal" parent="Screen/Viewport" instance=ExtResource("4_gf7xn")]
 
-[node name="QuadMesh" type="MeshInstance3D" parent="UglyComputer/Screen"]
-transform = Transform3D(0.362647, 0, 0, 0, 0.311693, 0.228051, 0, -0.0709981, 1.00118, 0, 0.36647, 0.171311)
+[node name="QuadMesh" type="MeshInstance3D" parent="Screen"]
 mesh = SubResource("QuadMesh_hih8b")
-skeleton = NodePath("../../Mesh3D")
+skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_c2vu2")
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="UglyComputer/Screen"]
-transform = Transform3D(1, 0, 0, 0, 0.975026, 0.222093, 0, -0.222093, 0.975026, 0, 0.36647, 0.171311)
-visible = false
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Screen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_k4xr5")
+metadata/_edit_lock_ = true
 
-[node name="ScreenCam" type="Camera3D" parent="UglyComputer/Screen"]
-transform = Transform3D(1, 0, 0, 0, 0.97437, 0.224951, 0, -0.224951, 0.97437, 0, 0.423, 0.457)
-visible = false
+[node name="ScreenCam" type="Camera3D" parent="Screen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.24)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="UglyComputer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0102539, 0.295166, 0.013916)
-visible = false
-shape = SubResource("BoxShape3D_etegk")
-
-[node name="NotePlaceholder" type="Node3D" parent="UglyComputer"]
+[node name="NotePlaceholder" type="Node3D" parent="Screen"]
 transform = Transform3D(1, 0, 0, 0, 0.975281, 0.22097, 0, -0.22097, 0.975281, -0.243419, 0.458622, 0.177792)
 
-[node name="Clock" parent="." instance=ExtResource("6_4jp77")]
-transform = Transform3D(0.849092, 0, 0.528245, 0, 1, 0, -0.528245, 0, 0.849092, -0.576694, 0.746152, -1.14688)
+[node name="Clock" parent="ClockArea" instance=ExtResource("6_4jp77")]
+transform = Transform3D(0.912834, 0, 0.408331, 0, 1, 0, -0.408331, 0, 0.912834, -0.474, 0.766, -0.044)
 interval = 2.0
 increment = 5
+metadata/_edit_group_ = true
 
 [node name="ClockArea" type="Area3D" parent="Clock"]
-transform = Transform3D(0.996738, 0, 0.0807035, 0, 1, 0, -0.0807035, 0, 0.996738, 0.0157753, 0, 0.256081)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Clock/ClockArea"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0.0315247, 0)
+visible = false
 shape = SubResource("BoxShape3D_c1hv4")
+metadata/_edit_lock_ = true
 
 [node name="ZoomTarget3D" type="Node3D" parent="Clock/ClockArea"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
@@ -132,7 +120,7 @@ visible = false
 script = ExtResource("6_pma3h")
 
 [node name="Camera3D" type="Camera3D" parent="Clock/ClockArea/ZoomTarget3D"]
-transform = Transform3D(1, 0, -2.98023e-08, 0, 0.939693, 0.34202, -2.98023e-08, -0.34202, 0.939693, 2.98023e-08, 0.085, 0.18)
+transform = Transform3D(1, 0, -2.98023e-08, 0, 0.939693, 0.34202, -2.98023e-08, -0.34202, 0.939693, 2.66389e-08, 0.121305, 0.279746)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 3, 3)
@@ -142,7 +130,8 @@ light_color = Color(0.61, 0.5734, 0.488, 1)
 environment = SubResource("Environment_43qhm")
 
 [node name="Board" parent="." instance=ExtResource("10_n5ycv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.810896, 1.32195, -1.3677)
+transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, 1.023, 1.397, -0.188)
+metadata/_edit_group_ = true
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_jvo82")
@@ -160,10 +149,10 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [connection signal="focusing" from="PlayerCam" to="." method="_on_player_cam_focusing"]
-[connection signal="area_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_entered"]
-[connection signal="area_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_exited"]
-[connection signal="input_event" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_input_event"]
-[connection signal="mouse_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_exited"]
+[connection signal="area_entered" from="Screen" to="Screen" method="_on_area_entered"]
+[connection signal="area_exited" from="Screen" to="Screen" method="_on_area_exited"]
+[connection signal="input_event" from="Screen" to="Screen" method="_on_input_event"]
+[connection signal="mouse_entered" from="Screen" to="Screen" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Screen" to="Screen" method="_on_mouse_exited"]
 [connection signal="alarm_triggered" from="Clock" to="." method="_on_clock_alarm_triggered"]
 [connection signal="note_picked" from="Board" to="." method="_on_board_note_picked"]
