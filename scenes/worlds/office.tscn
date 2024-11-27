@@ -88,24 +88,23 @@ surface_material_override/0 = SubResource("StandardMaterial3D_c2vu2")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Screen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_k4xr5")
 metadata/_edit_lock_ = true
 
 [node name="ScreenCam" type="Camera3D" parent="Screen"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.24)
+visible = false
 
 [node name="NotePlaceholder" type="Node3D" parent="Screen"]
-transform = Transform3D(1, 0, 0, 0, 0.975281, 0.22097, 0, -0.22097, 0.975281, -0.243419, 0.458622, 0.177792)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.223, 0.075, 0.03)
 
-[node name="Clock" parent="ClockArea" instance=ExtResource("6_4jp77")]
+[node name="Clock" parent="." instance=ExtResource("6_4jp77")]
 transform = Transform3D(0.912834, 0, 0.408331, 0, 1, 0, -0.408331, 0, 0.912834, -0.474, 0.766, -0.044)
 interval = 2.0
 increment = 5
 metadata/_edit_group_ = true
 
 [node name="ClockArea" type="Area3D" parent="Clock"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Clock/ClockArea"]

@@ -95,7 +95,9 @@ func _rotate_camera(delta_rad: Vector2, time_delta: float):
 
 ## Focus the camera on a new target
 func zoom_in(target: ZoomTarget3D) -> void:
-	assert(state == State.FREE or state == State.LOCKED)
+	if not (state == State.FREE or state == State.LOCKED):
+		push_warning("zoom_in called while camera was not free nor locked")
+		return
 	state = State.ZOOM_IN
 	
 	# Store current position and target destination
@@ -113,7 +115,9 @@ func zoom_in(target: ZoomTarget3D) -> void:
 ## Make the camera go back to the nth target, with 0 being free camera
 ## Negative `target_level` means go to nth previous target
 func zoom_out(target_level: int = -1) -> void:
-	assert(state == State.LOCKED)
+	if state != State.LOCKED:
+		push_warning("zoom_out called while camera was not locked")
+		return
 	if target_level < 0:
 		target_level = origins.size() + target_level
 	assert(0 <= target_level and target_level < origins.size())
@@ -130,7 +134,9 @@ func zoom_out(target_level: int = -1) -> void:
 
 ## Make the camera change its current target
 func swap_to(new_target: ZoomTarget3D) -> void:
-	assert(state == State.LOCKED)
+	if state != State.LOCKED:
+		push_warning("swap_to called while camera was not locked")
+		return
 	assert(targets.size() > 0)
 	
 	# Drop previous target

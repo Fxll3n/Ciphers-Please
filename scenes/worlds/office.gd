@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var Camera = $PlayerCam as CustomCamera
 @onready var Board = $Board
-@onready var Terminal = $UglyComputer/Screen/Viewport/Terminal
+@onready var Terminal = $Screen/Viewport/Terminal
 @onready var Clock = $Clock
 
 
@@ -24,6 +24,10 @@ func _ready() -> void:
 		var note : Note = NoteScene.instantiate()
 		note.task = task
 		Board.attach_note(note)
+	
+	# Required so that PickedNotePlaceholder is visible
+	Camera.visible = true
+	
 	Clock.time = day_start
 	Clock.alarm_time = day_end
 	start_day()
@@ -53,14 +57,14 @@ func _on_board_note_picked(note: Note) -> void:
 
 
 func _on_player_cam_focusing(node: Node3D) -> void:
-	if node == $UglyComputer/Screen:
+	if node == $Screen:
 		if note_in_hand != null and note_on_screen == null:
 			# Move variables around
 			note_on_screen = note_in_hand
 			note_in_hand = null
 			
 			# Move note to computer
-			note_on_screen.reparent($UglyComputer/NotePlaceholder)
+			note_on_screen.reparent($Screen/NotePlaceholder)
 			var tween = get_tree().create_tween()
 			tween.tween_property(note_on_screen, "transform", Transform3D(), 1.0)
 			# Load the task when animation is over

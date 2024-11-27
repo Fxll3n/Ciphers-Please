@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://o6k4mux2ha8b"]
 
-[ext_resource type="PackedScene" uid="uid://0dxwdi80c0g1" path="res://assets/scene_gltf/Board.glb" id="2_c4box"]
 [ext_resource type="Script" path="res://scripts/objects/board.gd" id="1_tl1rw"]
+[ext_resource type="PackedScene" uid="uid://0dxwdi80c0g1" path="res://assets/scene_gltf/Board.glb" id="2_c4box"]
 [ext_resource type="AudioStream" uid="uid://dy525dbf8r1rl" path="res://assets/sfx/postitnotegrab.wav" id="4_e6vee"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bab3o"]
