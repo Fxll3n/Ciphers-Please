@@ -56,7 +56,7 @@ func _on_board_note_picked(note: Note) -> void:
 	Camera.zoom_out()
 
 
-func _on_player_cam_focusing(node: Node3D) -> void:
+func _on_player_cam_node_clicked(node: Node3D) -> void:
 	if node == $Screen:
 		if note_in_hand != null and note_on_screen == null:
 			# Move variables around
@@ -71,8 +71,22 @@ func _on_player_cam_focusing(node: Node3D) -> void:
 			tween.tween_callback(Terminal.load_task.bind(note_on_screen.task))
 	
 	# TODO: Do we allow putting it back if player clicks the board?
-	# TODO: If player clicks the trash, bye bye note
 
+	# If player clicks the trash, bye bye note
+	if node == $Trashcan:
+		if note_in_hand != null:
+			# Move variables around
+			var note : Node3D = note_in_hand
+			note_in_hand = null
+
+			# Drop animation for note along with trash SFX
+			var tween = get_tree().create_tween()
+			tween.tween_property(note, "position:y", -1, 1.0)
+			tween.tween_callback(note.queue_free)
+			$Trashcan/TrashcanStreamPlayer.play()
+			
+			if note_on_screen == null:
+				Board.can_pick_tasks = true
 
 func _on_clock_alarm_triggered(time: int) -> void:
 	if time >= day_end:

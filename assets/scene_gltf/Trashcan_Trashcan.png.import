@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyl31bumm5yud"
-path.s3tc="res://.godot/imported/Scene_Trashcan.png-0d7870f72c757d3a37faf2b720e47894.s3tc.ctex"
+uid="uid://csvcd32r6ip6r"
+path.s3tc="res://.godot/imported/Trashcan_Trashcan.png-76117fbd4ea6e1394ac83c58f8afcfeb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/scene_gltf/Scene_Trashcan.png"
-dest_files=["res://.godot/imported/Scene_Trashcan.png-0d7870f72c757d3a37faf2b720e47894.s3tc.ctex"]
+source_file="res://assets/scene_gltf/Trashcan_Trashcan.png"
+dest_files=["res://.godot/imported/Trashcan_Trashcan.png-76117fbd4ea6e1394ac83c58f8afcfeb.s3tc.ctex"]
 
 [params]
 

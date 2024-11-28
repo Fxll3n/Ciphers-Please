@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=20 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
 [ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
 [ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
 [ext_resource type="PackedScene" uid="uid://o6k4mux2ha8b" path="res://scenes/objects/board.tscn" id="10_n5ycv"]
+[ext_resource type="PackedScene" uid="uid://xti1qf37jief" path="res://assets/scene_gltf/Trashcan.glb" id="10_pp3pg"]
+[ext_resource type="AudioStream" uid="uid://bgblt7logjx31" path="res://assets/sfx/trash.wav" id="11_mfhjy"]
 [ext_resource type="AudioStream" uid="uid://djel1asqls3g1" path="res://assets/music/solvepuzzle.ogg" id="13_jvo82"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
@@ -33,12 +35,16 @@ background_color = Color(0.32, 0.303573, 0.2496, 1)
 ambient_light_sky_contribution = 0.4
 glow_enabled = true
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ij4al"]
+height = 0.319101
+radius = 0.169524
+
 [node name="Office" type="Node3D"]
 script = ExtResource("1_oqg2a")
 metadata/_edit_lock_ = true
 
 [node name="PlayerCam" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.999657, 0.0261947, 0, -0.0261947, 0.999657, 0, 1.06637, 0.823151)
+transform = Transform3D(1, 0, 0, 0, 0.990887, 0.134696, 0, -0.134696, 0.990887, 0, 1.06637, 0.823151)
 visible = false
 current = true
 script = ExtResource("3_fm5oh")
@@ -131,6 +137,22 @@ environment = SubResource("Environment_43qhm")
 transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, 1.023, 1.397, -0.188)
 metadata/_edit_group_ = true
 
+[node name="Trashcan" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.844827, 0, 0.405863)
+metadata/_edit_group_ = true
+
+[node name="TrashcanMesh" parent="Trashcan" instance=ExtResource("10_pp3pg")]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trashcan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.190706, 0)
+shape = SubResource("CylinderShape3D_ij4al")
+metadata/_edit_lock_ = true
+
+[node name="TrashcanStreamPlayer" type="AudioStreamPlayer3D" parent="Trashcan"]
+stream = ExtResource("11_mfhjy")
+bus = &"SFX"
+
 [node name="MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_jvo82")
 autoplay = true
@@ -146,7 +168,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[connection signal="focusing" from="PlayerCam" to="." method="_on_player_cam_focusing"]
+[connection signal="node_clicked" from="PlayerCam" to="." method="_on_player_cam_node_clicked"]
 [connection signal="area_entered" from="Screen" to="Screen" method="_on_area_entered"]
 [connection signal="area_exited" from="Screen" to="Screen" method="_on_area_exited"]
 [connection signal="input_event" from="Screen" to="Screen" method="_on_input_event"]

@@ -34,6 +34,8 @@ enum State {FREE, ZOOM_IN, LOCKED, ZOOM_OUT}
 @export var experimentalRotationSmoothing: bool = true
 @export_range(0, 1, 0.05) var stickDeadzone = 0.15
 
+## Signal emitted when a target is clicked in free camera mode
+signal node_clicked(Node3D)
 ## Signal emitted when the camera starts moving toward a new target
 signal focusing(Node3D)
 
@@ -69,6 +71,9 @@ func _physics_process(delta: float) -> void:
 	# Target picking, only works when camera is free
 	if state == State.FREE and Input.is_action_just_pressed("pick_object"):
 		var collider = $ObjectPickerRay.get_collider()
+		if collider != null:
+			node_clicked.emit(collider)
+		
 		if collider is ZoomTarget3D:
 			zoom_in(collider)
 		elif collider is Node3D:
@@ -76,7 +81,6 @@ func _physics_process(delta: float) -> void:
 				if child is ZoomTarget3D:
 					zoom_in(child)
 					return
-			print_debug("Collider", collider, "has no valid target children")
 			
 	if state == State.LOCKED and Input.is_action_just_pressed("go_back"):
 		zoom_out()
