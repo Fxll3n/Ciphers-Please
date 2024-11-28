@@ -34,6 +34,9 @@ enum State {FREE, ZOOM_IN, LOCKED, ZOOM_OUT}
 @export var experimentalRotationSmoothing: bool = true
 @export_range(0, 1, 0.05) var stickDeadzone = 0.15
 
+## Signal emitted when the camera starts moving toward a new target
+signal focusing(Node3D)
+
 ## List of global transforms to zoom back to
 var origins: Array[Transform3D] = []
 ## List of zoom targets (last one is focused)
@@ -104,6 +107,8 @@ func zoom_in(target: ZoomTarget3D) -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_transform", destination, 1).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(self._zoom_finished)
+	
+	focusing.emit(target)
 
 ## Make the camera go back to the nth target, with 0 being free camera
 ## Negative `target_level` means go to nth previous target
@@ -119,12 +124,31 @@ func zoom_out(target_level: int = -1) -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_transform", origins[target_level], 1).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(self._zoom_finished)
-	# Focus new target if any
-	if target_level > 0:
-		targets[target_level - 1].focused = true
 	# Drop popped levels
 	origins.resize(target_level)
 	targets.resize(target_level)
+
+## Make the camera change its current target
+func swap_to(new_target: ZoomTarget3D) -> void:
+	assert(state == State.LOCKED)
+	assert(targets.size() > 0)
+	
+	# Drop previous target
+	var old_target := targets[targets.size() - 1]
+	old_target.focused = false
+	old_target.disconnect("zoom_out", self.zoom_out)
+	targets[targets.size() - 1] = new_target
+	var destination := new_target.target_transform
+	
+	state = State.ZOOM_IN
+	
+	# Hide cursor and animate translation
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "global_transform", destination, 1).set_trans(Tween.TRANS_SINE)
+	tween.tween_callback(self._zoom_finished)
+
+	focusing.emit(new_target)
+
 
 ## Called when the zoom_out animation is finished
 func _zoom_finished() -> void:

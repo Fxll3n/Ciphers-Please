@@ -15,6 +15,14 @@ run/main_scene="res://scenes/worlds/office.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://bus_layout.tres"
+
+[autoload]
+
+Game="*res://scripts/Game.gd"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")

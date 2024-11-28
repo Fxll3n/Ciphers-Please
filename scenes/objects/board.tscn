@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://o6k4mux2ha8b"]
+[gd_scene load_steps=13 format=3 uid="uid://o6k4mux2ha8b"]
 
 [ext_resource type="ArrayMesh" uid="uid://elx0pangoktx" path="res://assets/meshes/ugly_board.obj" id="1_sj5gh"]
+[ext_resource type="Script" path="res://scripts/objects/board.gd" id="1_tl1rw"]
 [ext_resource type="Texture2D" uid="uid://dfrqwph1rwlv2" path="res://assets/cork.png" id="2_5040n"]
-[ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="3_j76n3"]
+[ext_resource type="AudioStream" uid="uid://dy525dbf8r1rl" path="res://assets/sfx/postitnotegrab.wav" id="4_e6vee"]
 
 [sub_resource type="Gradient" id="Gradient_2s0bw"]
 offsets = PackedFloat32Array(0.114007, 0.85342)
@@ -28,10 +29,16 @@ uv1_scale = Vector3(3, 4, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_bab3o"]
 size = Vector3(0.6, 0.8, 0)
 
+[sub_resource type="Theme" id="Theme_qj171"]
+default_font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_gj0u7"]
+font_size = 26
+
 [node name="Board" type="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.351632, 1.29097, -1.36826)
 input_ray_pickable = false
-script = ExtResource("3_j76n3")
+script = ExtResource("1_tl1rw")
 
 [node name="UglyBoard" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_sj5gh")
@@ -45,3 +52,79 @@ shape = SubResource("BoxShape3D_bab3o")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.54)
 visible = false
+
+[node name="NoteSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_e6vee")
+bus = &"SFX"
+
+[node name="NotePlaceholder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.4)
+
+[node name="UI" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="Buttons" type="Control" parent="UI"]
+layout_mode = 2
+theme = SubResource("Theme_qj171")
+
+[node name="PickTaskButton" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -195.0
+offset_top = -177.0
+offset_right = -15.0
+offset_bottom = -102.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+text = "Pick"
+
+[node name="CancelButton" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -194.0
+offset_top = -87.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+text = "Cancel"
+
+[node name="Panel" type="Panel" parent="UI"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.5
+offset_top = -18.0
+offset_right = 68.5
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Pick a Task"
+label_settings = SubResource("LabelSettings_gj0u7")
+
+[connection signal="pressed" from="UI/Buttons/PickTaskButton" to="." method="_on_pick_task_button_pressed"]
+[connection signal="pressed" from="UI/Buttons/CancelButton" to="." method="_on_cancel_button_pressed"]
