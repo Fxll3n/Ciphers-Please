@@ -28,10 +28,9 @@ size = Vector3(0.327, 0.29, 0)
 size = Vector3(0.21, 0.0619507, 0.17)
 
 [sub_resource type="Environment" id="Environment_43qhm"]
-ambient_light_source = 3
-ambient_light_color = Color(1, 1, 1, 1)
+background_mode = 1
+background_color = Color(0.32, 0.303573, 0.2496, 1)
 ambient_light_sky_contribution = 0.4
-ambient_light_energy = 0.5
 glow_enabled = true
 
 [node name="Office" type="Node3D"]
@@ -72,6 +71,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, -0.05, -0.15)
 
 [node name="Scene" parent="." instance=ExtResource("4_7g7d6")]
 
+[node name="OmniLight3D" type="OmniLight3D" parent="Scene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.665679, 2.54266, 1.11461)
+shadow_enabled = true
+
 [node name="Screen" type="Area3D" parent="."]
 transform = Transform3D(0.96, 0, 0, 0, 0.936143, 0.212687, 0, -0.212687, 0.936143, 0, 1.023, 0.026)
 script = ExtResource("3_lbevc")
@@ -92,14 +95,14 @@ shape = SubResource("BoxShape3D_k4xr5")
 metadata/_edit_lock_ = true
 
 [node name="ScreenCam" type="Camera3D" parent="Screen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.24)
+transform = Transform3D(1.04167, 0, 0, 0, 1.04167, 0, 0, 0, 1.04167, 0, 0, 0.234)
 visible = false
 
 [node name="NotePlaceholder" type="Node3D" parent="Screen"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.223, 0.075, 0.03)
 
 [node name="Clock" parent="." instance=ExtResource("6_4jp77")]
-transform = Transform3D(0.912834, 0, 0.408331, 0, 1, 0, -0.408331, 0, 0.912834, -0.474, 0.766, -0.044)
+transform = Transform3D(0.787265, 0, 0.142177, 0, 0.8, 0, -0.142177, 0, 0.787265, -0.407496, 0.766, -0.0947458)
 interval = 2.0
 increment = 5
 metadata/_edit_group_ = true
@@ -120,10 +123,6 @@ script = ExtResource("6_pma3h")
 
 [node name="Camera3D" type="Camera3D" parent="Clock/ClockArea/ZoomTarget3D"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 0.939693, 0.34202, -2.98023e-08, -0.34202, 0.939693, 2.66389e-08, 0.121305, 0.279746)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 3, 3)
-light_color = Color(0.61, 0.5734, 0.488, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_43qhm")

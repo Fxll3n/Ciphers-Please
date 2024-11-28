@@ -41,6 +41,9 @@ void vertex() {
 		float offset = y_fold - VERTEX.y;
 		VERTEX.y -= cos(fold_rad) * offset - offset;
 		VERTEX.z += sin(fold_rad) * offset;
+
+		NORMAL.y = sin(fold_rad);
+		NORMAL.z = cos(fold_rad);
 	}
 }
 
