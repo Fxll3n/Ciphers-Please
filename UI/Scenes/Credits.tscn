@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://cpvqbw8cx841b"]
+
+[ext_resource type="Script" path="res://UI/scripts/credits.gd" id="1_q8no1"]
+[ext_resource type="StyleBox" uid="uid://b1dqst5a0ojsp" path="res://assets/buttons/Hover_button.tres" id="2_tn215"]
+[ext_resource type="FontFile" uid="uid://dnkeqwoqftiar" path="res://assets/fonts/veteran typewriter.ttf" id="2_u0wxf"]
+[ext_resource type="StyleBox" uid="uid://b2oqudj0kg28q" path="res://assets/buttons/pressed.tres" id="3_r6rxx"]
+[ext_resource type="StyleBox" uid="uid://blot0lb4f5ttr" path="res://assets/buttons/Normal.tres" id="4_56q0f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0f23h"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q8no1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1154.0
+offset_bottom = 647.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 370.0
+offset_top = 71.0
+offset_right = 780.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0.737255, 0, 1)
+theme_override_fonts/font = ExtResource("2_u0wxf")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_0f23h")
+text = "Credits:
+Zeroji: Developer.
+Angle: Developer.
+Isaac: Composer.
+Leo: Artist 2D
+sophie: Writer.
+Saaeb: UI Developer.
+
+Thanks to everyone. ♥"
+
+[node name="Back" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_top = 564.0
+offset_right = 156.0
+offset_bottom = 647.0
+theme_override_colors/font_color = Color(0, 0.737255, 0, 1)
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = ExtResource("2_tn215")
+theme_override_styles/pressed = ExtResource("3_r6rxx")
+theme_override_styles/normal = ExtResource("4_56q0f")
+text = "Back"
+
+[connection signal="pressed" from="Back" to="." method="back_button_pressed"]

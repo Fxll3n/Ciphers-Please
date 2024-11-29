@@ -6,8 +6,10 @@ extends Node3D
 @onready var Clock = $Clock
 
 
-@export var day_start: int = 6*60
+@export var day_start: int = 17*60
 @export var day_end: int = 18*60
+
+
 
 var last_pressed: int = -1000
 
@@ -15,7 +17,8 @@ var last_pressed: int = -1000
 var note_in_hand: Note = null
 ## Note currently on the side of the screen
 var note_on_screen: Note = null
-
+@onready var gui = $GUI
+var show = false
 @onready var NoteScene = preload("res://scenes/objects/note.tscn")
 
 func _ready() -> void:
@@ -27,7 +30,24 @@ func _ready() -> void:
 	Clock.time = day_start
 	Clock.alarm_time = day_end
 	start_day()
+	General.scene_before = "Main"
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+	
+func _process(delta):
+	# this is for the pause menu
+	if Input.is_action_just_pressed("Esc"):
+		# this is where it doesn't show
+		show = !show
+		if show == true:
+			gui.show()
+			Engine.time_scale = 0
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		# this is where it shows
+		else:
+			gui.hide()
+			Engine.time_scale = 1
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 func _input(event):
 	if event.is_action_pressed("debug_quit"):
 		# Quickly exit the scene if stuck
@@ -87,3 +107,12 @@ func end_day() -> void:
 	tween.tween_callback(Camera.zoom_out)
 	tween.tween_property($Black, "self_modulate:a", 1, 1.0)
 	tween.tween_callback(Game.end_day)
+
+func _on_resume_pressed():
+	gui.hide()
+	Engine.time_scale = 1
+	show = false
+func _on_main_menu_pressed():
+	get_tree().change_scene_to_file("res://UI/Scenes/main_menu.tscn")
+func _on_settings_pressed():
+	get_tree().change_scene_to_file("res://UI/Scenes/settings.tscn")

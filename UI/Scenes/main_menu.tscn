@@ -1,0 +1,97 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnauk1vn6hkhf"]
+
+[ext_resource type="Script" path="res://UI/scripts/main_menu.gd" id="1_5sfbw"]
+[ext_resource type="Texture2D" uid="uid://bbuv80xcfc6ow" path="res://assets/CiphersPleaseCover.jpg" id="2_25pm1"]
+[ext_resource type="StyleBox" uid="uid://b1dqst5a0ojsp" path="res://assets/buttons/Hover_button.tres" id="3_kd4q7"]
+[ext_resource type="StyleBox" uid="uid://b2oqudj0kg28q" path="res://assets/buttons/pressed.tres" id="4_yd217"]
+[ext_resource type="StyleBox" uid="uid://blot0lb4f5ttr" path="res://assets/buttons/Normal.tres" id="5_jt811"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_qw5vw"]
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5sfbw")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -103.0
+offset_right = 1154.0
+offset_bottom = 651.0
+texture = ExtResource("2_25pm1")
+
+[node name="Container" type="Container" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 329.0
+offset_top = -86.0
+offset_right = 532.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0, 0.341176, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.172549, 0, 1)
+theme_override_colors/font_color = Color(0, 0.470588, 0, 1)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = ExtResource("3_kd4q7")
+theme_override_styles/pressed = ExtResource("4_yd217")
+theme_override_styles/normal = ExtResource("5_jt811")
+text = "Play"
+icon = SubResource("CanvasTexture_qw5vw")
+
+[node name="Settings" type="Button" parent="Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0, 0.341176, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.172549, 0, 1)
+theme_override_colors/font_color = Color(0, 0.470588, 0, 1)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = ExtResource("3_kd4q7")
+theme_override_styles/pressed = ExtResource("4_yd217")
+theme_override_styles/normal = ExtResource("5_jt811")
+text = "Settings"
+icon = SubResource("CanvasTexture_qw5vw")
+
+[node name="Credits" type="Button" parent="Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0, 0.341176, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.172549, 0, 1)
+theme_override_colors/font_color = Color(0, 0.470588, 0, 1)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = ExtResource("3_kd4q7")
+theme_override_styles/pressed = ExtResource("4_yd217")
+theme_override_styles/normal = ExtResource("5_jt811")
+text = "Credits
+"
+icon = SubResource("CanvasTexture_qw5vw")
+
+[node name="Quit" type="Button" parent="Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0, 0.341176, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.172549, 0, 1)
+theme_override_colors/font_color = Color(0, 0.470588, 0, 1)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = ExtResource("3_kd4q7")
+theme_override_styles/pressed = ExtResource("4_yd217")
+theme_override_styles/normal = ExtResource("5_jt811")
+text = "Quit
+"
+icon = SubResource("CanvasTexture_qw5vw")
+
+[connection signal="pressed" from="Container/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcutibay8pkp8"]
+
+[ext_resource type="Script" path="res://UI/scripts/muic_options.gd" id="1_ff0i5"]
+
+[node name="MuicOptions" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1136.0
+offset_bottom = -465.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ff0i5")
+
+[node name="HSlider" type="VSlider" parent="."]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 183.0
+max_value = 30.0
+value = 30.0
+
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]

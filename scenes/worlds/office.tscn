@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=21 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="ArrayMesh" uid="uid://d1qysqwgx6sxj" path="res://assets/meshes/ugly_desk.obj" id="1_gxogq"]
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
@@ -10,7 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
 [ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
 [ext_resource type="PackedScene" uid="uid://o6k4mux2ha8b" path="res://scenes/objects/board.tscn" id="10_n5ycv"]
-[ext_resource type="AudioStream" uid="uid://djel1asqls3g1" path="res://assets/music/solvepuzzle.ogg" id="13_jvo82"]
+[ext_resource type="StyleBox" uid="uid://b1dqst5a0ojsp" path="res://assets/buttons/Hover_button.tres" id="11_n8dfm"]
+[ext_resource type="StyleBox" uid="uid://b2oqudj0kg28q" path="res://assets/buttons/pressed.tres" id="12_bb8un"]
+[ext_resource type="StyleBox" uid="uid://blot0lb4f5ttr" path="res://assets/buttons/Normal.tres" id="13_vuqau"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
 
@@ -145,11 +147,11 @@ environment = SubResource("Environment_43qhm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.810896, 1.32195, -1.3677)
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_jvo82")
 autoplay = true
 bus = &"Music"
 
 [node name="Black" type="ColorRect" parent="."]
+visible = false
 z_index = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -159,6 +161,67 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
+[node name="GUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GUI"]
+offset_right = 1154.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.466667)
+
+[node name="Container" type="Container" parent="GUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -119.0
+offset_top = -119.0
+offset_right = -79.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Container"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Resume" type="Button" parent="GUI/Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.184314, 0, 1)
+theme_override_colors/font_color = Color(0, 0.615686, 0, 1)
+theme_override_font_sizes/font_size = 45
+theme_override_styles/hover = ExtResource("11_n8dfm")
+theme_override_styles/pressed = ExtResource("12_bb8un")
+theme_override_styles/normal = ExtResource("13_vuqau")
+text = "Resume"
+
+[node name="Main_menu" type="Button" parent="GUI/Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.184314, 0, 1)
+theme_override_colors/font_color = Color(0, 0.615686, 0, 1)
+theme_override_font_sizes/font_size = 45
+theme_override_styles/hover = ExtResource("11_n8dfm")
+theme_override_styles/pressed = ExtResource("12_bb8un")
+theme_override_styles/normal = ExtResource("13_vuqau")
+text = "Main menu"
+
+[node name="Settings" type="Button" parent="GUI/Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.184314, 0, 1)
+theme_override_colors/font_color = Color(0, 0.615686, 0, 1)
+theme_override_font_sizes/font_size = 45
+theme_override_styles/hover = ExtResource("11_n8dfm")
+theme_override_styles/pressed = ExtResource("12_bb8un")
+theme_override_styles/normal = ExtResource("13_vuqau")
+text = "Settings"
+
 [connection signal="focusing" from="PlayerCam" to="." method="_on_player_cam_focusing"]
 [connection signal="area_entered" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_entered"]
 [connection signal="area_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_area_exited"]
@@ -167,3 +230,6 @@ color = Color(0, 0, 0, 1)
 [connection signal="mouse_exited" from="UglyComputer/Screen" to="UglyComputer/Screen" method="_on_mouse_exited"]
 [connection signal="alarm_triggered" from="Clock" to="." method="_on_clock_alarm_triggered"]
 [connection signal="note_picked" from="Board" to="." method="_on_board_note_picked"]
+[connection signal="pressed" from="GUI/Container/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="GUI/Container/VBoxContainer/Main_menu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="GUI/Container/VBoxContainer/Settings" to="." method="_on_settings_pressed"]

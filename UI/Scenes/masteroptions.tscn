@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqedu3mvt1ib2"]
+
+[ext_resource type="Script" path="res://UI/scripts/masteroptions.gd" id="1_lc7hw"]
+
+[node name="Masteroptions" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lc7hw")
+
+[node name="HSlider" type="VSlider" parent="."]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 183.0
+max_value = 20.0
+value = 20.0
+
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]
