@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://c0hsbqotxlews"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_681fx"]
+
+[resource]
+script = ExtResource("1_681fx")
+msg = "Citizens are carrying out their daily routines like normal, but they hold their children's hands tighter and smile through furrowed brows."
+msg_type = 2
+day = 4
+conditions = Array[ExtResource("1_681fx")]([])
+from_to = "Walter Williams"
+difficulty = 1
+pay = 15
+key = "21"
+cipher_type = 1

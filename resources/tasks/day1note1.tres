@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://dc688ti5fjesb"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_3lkc3"]
+
+[resource]
+script = ExtResource("1_3lkc3")
+msg = "Increased convoy activity at Nevada base. Intel suggests new ICBM testing successful. Mass production engaging."
+msg_type = 1
+day = 1
+from_to = "Vladislav Nosov"
+difficulty = 2
+pay = 10
+key = "16"
+cipher_type = 1

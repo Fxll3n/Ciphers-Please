@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://dpj3eyjnd1umh"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_dax8r"]
+
+[resource]
+script = ExtResource("1_dax8r")
+msg = "Urgent intel! President revealed to be a reptile overlord! His serpentine army is hatching in a secret bunker under the White House!"
+msg_type = 1
+day = 3
+conditions = Array[ExtResource("1_dax8r")]([])
+from_to = "Alexander Smirnov"
+difficulty = 0
+pay = 5
+key = ""
+cipher_type = 0

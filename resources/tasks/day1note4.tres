@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://c5kqsg28rrmah"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="2_lkjg7"]
+
+[resource]
+script = ExtResource("2_lkjg7")
+msg = "Soviets meeting with allies. Reds must be contained before breaching Western countries, deploy intelligence in neighbouring countries ASAP."
+msg_type = 2
+day = 1
+from_to = "Howard Brown"
+difficulty = 3
+pay = 20
+key = "19"
+cipher_type = 1

@@ -11,7 +11,7 @@ extends Node3D
 @export var day_end: int = 18*60
 
 var last_pressed: int = -1000
-var last_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
+var last_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 
 ## Note currently held by the player
 var note_in_hand: Note = null
@@ -20,18 +20,16 @@ var note_on_screen: Note = null
 @onready var NoteScene = preload("res://scenes/objects/note.tscn")
 
 func _ready() -> void:
-	# Add today's tasks to the board
-	for task in Game.day_tasks:
-		var note : Note = NoteScene.instantiate()
-		note.task = task
-		Board.attach_note(note)
+	Game.connect("new_task", _on_new_task)
 	
 	# Required so that PickedNotePlaceholder is visible
 	Camera.visible = true
 	
 	Clock.time = day_start
 	Clock.alarm_time = day_end
+	Board.can_pick_tasks = false # Disable sound upon adding new notes
 	start_day()
+	Board.can_pick_tasks = true
 	General.scene_before = "Main"
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -85,6 +83,8 @@ func _on_player_cam_node_clicked(node: Node3D) -> void:
 	# If player clicks the trash, bye bye note
 	if node == $Trashcan:
 		if note_in_hand != null:
+			note_in_hand.task.trashed = true
+			
 			# Move variables around
 			var note : Node3D = note_in_hand
 			note_in_hand = null
@@ -98,6 +98,36 @@ func _on_player_cam_node_clicked(node: Node3D) -> void:
 			if note_on_screen == null:
 				Board.can_pick_tasks = true
 
+func _on_new_task(task: Task):
+	task.available = true
+	# Add task to the board
+	var note : Note = NoteScene.instantiate()
+	note.task = task
+	Board.attach_note(note)
+
+func _on_terminal_task_complete() -> void:
+	Terminal.unload_task()
+	assert(note_on_screen != null)
+	note_on_screen.task.completed = true
+	
+	$Screen/Viewport/Terminal/SubmitSound.play()
+	Camera.zoom_out()
+	note_on_screen.queue_free()
+	note_on_screen = null
+	Board.can_pick_tasks = true
+	get_tree().create_timer(1).timeout.connect(Game.on_task_completed)
+
+func _on_terminal_task_deleted() -> void:
+	Terminal.unload_task()
+	assert(note_on_screen != null)
+	note_on_screen.task.trashed = true
+	
+	$Trashcan/TrashcanStreamPlayer.play()
+	Camera.zoom_out()
+	note_on_screen.queue_free()
+	note_on_screen = null
+	Board.can_pick_tasks = true
+
 func _on_clock_alarm_triggered(time: int) -> void:
 	if time >= day_end:
 		end_day()
@@ -107,6 +137,7 @@ func start_day() -> void:
 	# Fade from black
 	$Black.modulate.a = 1
 	get_tree().create_tween().tween_property($Black, "self_modulate:a", 0, 1.0)
+	Game.start_day()
 
 
 func end_day() -> void:

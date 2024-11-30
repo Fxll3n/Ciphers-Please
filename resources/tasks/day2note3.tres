@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://0vspb27kd0b4"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="2_brhvo"]
+
+[resource]
+script = ExtResource("2_brhvo")
+msg = "I swore loyalty yet my hands shake, dear Emily. Children bundled in scarves laugh at playgrounds, if I close my eyes they sound no different than our Bobby."
+msg_type = 2
+day = 2
+from_to = "Walter Williams"
+difficulty = 1
+pay = 10
+key = ""
+cipher_type = 2

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://dmrb8tfgo2mlc"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_3l1qx"]
+
+[resource]
+script = ExtResource("1_3l1qx")
+msg = "Comrade, please contact my Anna. Surely you must know the longing for home. Tell her I work hard and hope my pay covers little Igor's medicine."
+msg_type = 1
+day = 1
+from_to = "Nikolay Popov"
+difficulty = 0
+pay = 0
+key = ""
+cipher_type = 0

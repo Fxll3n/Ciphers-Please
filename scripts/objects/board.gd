@@ -73,6 +73,8 @@ func _on_pick_task_button_pressed() -> void:
 		var note = focused_note
 		focused_note = null
 		$UI/Buttons.hide()
+		if note.board_slot >= 0:
+			available_slots.append(note.board_slot)
 		note.disconnect("note_clicked", _on_note_clicked)
 		note_picked.emit(note)
 
@@ -87,7 +89,9 @@ func _get_slot_transform(index: int) -> Transform3D:
 
 ## Attach a new note to the board
 func attach_note(note: Note) -> void:
-	assert(available_slots.size() > 0)
+	if available_slots.is_empty():
+		print_debug("Cannot show note, no slots left: ", note)
+		return
 	var i = randi_range(0, available_slots.size() - 1)
 	var slot = available_slots[i]
 	available_slots.remove_at(i)
@@ -96,5 +100,10 @@ func attach_note(note: Note) -> void:
 		add_child(note)
 	else:
 		note.reparent(self, false)
+	note.board_slot = slot
 	note.transform = _get_slot_transform(slot)
 	note.connect("note_clicked", _on_note_clicked)
+	
+	# Play sound if needed
+	if can_pick_tasks:
+		$NoteSFX.play()

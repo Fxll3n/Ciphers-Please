@@ -9,6 +9,8 @@ class_name Note extends Area3D
 @onready var folded_angle_deg = randf_range(140, 175)
 @onready var unfolded_angle_deg = randf_range(5, 20)
 
+var board_slot: int = -1 # Used only for board management
+
 signal note_clicked(note: Note)
 
 ## Focus this note when clicked if the parent target is focused
@@ -42,6 +44,13 @@ func _ready() -> void:
 		
 		labelText += "\n\n" + task.input_text
 		label.text = labelText
+		
+		# Find length of longest word and force wrap if it's too long
+		var longest = 0
+		for word in task.input_text.split(" ", false):
+			longest = max(longest, len(word))
+		if longest > 30:
+			label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 		
 		# Initialize stamp
 		var textureRegion = stampTexture.texture.region as Rect2

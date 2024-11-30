@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://drepoddl3penu"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_35yi2"]
+
+[resource]
+script = ExtResource("1_35yi2")
+msg = "Closed meetings between President and Defence Secretary. Bated breath suffocating all government officials."
+msg_type = 1
+day = 4
+conditions = Array[ExtResource("1_35yi2")]([])
+from_to = "Vladislav Nosov"
+difficulty = 4
+pay = 12
+key = "CCCP"
+cipher_type = 3

@@ -132,9 +132,23 @@ scroll_active = false
 layout_mode = 2
 
 [node name="TextEdit" type="TextEdit" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 235)
 layout_mode = 2
-placeholder_text = "<ENTER ANSWER>"
+size_flags_vertical = 3
+wrap_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Submit" type="Button" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SUBMIT"
+
+[node name="Trash" type="Button" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SEND TO TRASH"
 
 [node name="Section 3" type="Panel" parent="TabBarSplit/MainSplit"]
 layout_mode = 2
@@ -196,3 +210,5 @@ test
 tes"
 
 [connection signal="pressed" from="TabBarSplit/Panel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Submit" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Trash" to="." method="_on_trash_pressed"]

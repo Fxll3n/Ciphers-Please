@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Task" load_steps=3 format=3 uid="uid://o62gu7oasdym"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_eg83g"]
+[ext_resource type="Resource" uid="uid://dmrb8tfgo2mlc" path="res://resources/tasks/day1note2.tres" id="1_x8qo0"]
+
+[resource]
+script = ExtResource("1_eg83g")
+msg = "Worthless transmission prohibited. Obey protocol. Payment docked for disobedience. Disrespect of Motherland will not be tolerated."
+msg_type = 0
+day = 1
+conditions = Array[ExtResource("1_eg83g")]([ExtResource("1_x8qo0")])
+from_to = "Nikolay Popov"
+difficulty = 1
+pay = 5
+key = "2"
+cipher_type = 1
