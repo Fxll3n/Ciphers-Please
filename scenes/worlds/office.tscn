@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=25 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
 [ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
@@ -11,7 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://o6k4mux2ha8b" path="res://scenes/objects/board.tscn" id="10_n5ycv"]
 [ext_resource type="PackedScene" uid="uid://xti1qf37jief" path="res://assets/scene_gltf/Trashcan.glb" id="10_pp3pg"]
 [ext_resource type="AudioStream" uid="uid://bgblt7logjx31" path="res://assets/sfx/trash.wav" id="11_mfhjy"]
+[ext_resource type="StyleBox" uid="uid://b1dqst5a0ojsp" path="res://assets/buttons/Hover_button.tres" id="11_n8dfm"]
+[ext_resource type="StyleBox" uid="uid://b2oqudj0kg28q" path="res://assets/buttons/pressed.tres" id="12_bb8un"]
+[ext_resource type="Script" path="res://UI/scripts/gui.gd" id="12_d8mt8"]
 [ext_resource type="AudioStream" uid="uid://djel1asqls3g1" path="res://assets/music/solvepuzzle.ogg" id="13_jvo82"]
+[ext_resource type="StyleBox" uid="uid://blot0lb4f5ttr" path="res://assets/buttons/Normal.tres" id="13_vuqau"]
+[ext_resource type="PackedScene" uid="uid://k2rbkehygmjk" path="res://UI/Scenes/settings.tscn" id="15_1q2ph"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
 size = Vector2(0.327, 0.29)
@@ -154,11 +159,13 @@ stream = ExtResource("11_mfhjy")
 bus = &"SFX"
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("13_jvo82")
 autoplay = true
 bus = &"Music"
 
 [node name="Black" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -168,6 +175,87 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
+[node name="GUI" type="CanvasLayer" parent="."]
+process_mode = 2
+visible = false
+script = ExtResource("12_d8mt8")
+
+[node name="ColorRect" type="ColorRect" parent="GUI"]
+offset_right = 1154.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.466667)
+
+[node name="Container" type="Container" parent="GUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -119.0
+offset_top = -119.0
+offset_right = -79.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Container"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Resume" type="Button" parent="GUI/Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.184314, 0, 1)
+theme_override_colors/font_color = Color(0, 0.615686, 0, 1)
+theme_override_font_sizes/font_size = 45
+theme_override_styles/hover = ExtResource("11_n8dfm")
+theme_override_styles/pressed = ExtResource("12_bb8un")
+theme_override_styles/normal = ExtResource("13_vuqau")
+text = "Resume"
+
+[node name="Settings" type="Button" parent="GUI/Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.184314, 0, 1)
+theme_override_colors/font_color = Color(0, 0.615686, 0, 1)
+theme_override_font_sizes/font_size = 45
+theme_override_styles/hover = ExtResource("11_n8dfm")
+theme_override_styles/pressed = ExtResource("12_bb8un")
+theme_override_styles/normal = ExtResource("13_vuqau")
+text = "Settings"
+
+[node name="Main_menu" type="Button" parent="GUI/Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.313726, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.184314, 0, 1)
+theme_override_colors/font_color = Color(0, 0.615686, 0, 1)
+theme_override_font_sizes/font_size = 45
+theme_override_styles/hover = ExtResource("11_n8dfm")
+theme_override_styles/pressed = ExtResource("12_bb8un")
+theme_override_styles/normal = ExtResource("13_vuqau")
+text = "Main menu"
+
+[node name="Label" type="Label" parent="GUI/Container/VBoxContainer/Main_menu"]
+self_modulate = Color(1, 0.54, 0.54, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.5
+offset_top = -23.0
+offset_right = 100.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "Progress will not be saved"
+
+[node name="Settings" parent="GUI" instance=ExtResource("15_1q2ph")]
+visible = false
+
 [connection signal="node_clicked" from="PlayerCam" to="." method="_on_player_cam_node_clicked"]
 [connection signal="area_entered" from="Screen" to="Screen" method="_on_area_entered"]
 [connection signal="area_exited" from="Screen" to="Screen" method="_on_area_exited"]
@@ -176,3 +264,7 @@ color = Color(0, 0, 0, 1)
 [connection signal="mouse_exited" from="Screen" to="Screen" method="_on_mouse_exited"]
 [connection signal="alarm_triggered" from="Clock" to="." method="_on_clock_alarm_triggered"]
 [connection signal="note_picked" from="Board" to="." method="_on_board_note_picked"]
+[connection signal="esc_pressed" from="GUI" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="GUI/Container/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="GUI/Container/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="GUI/Container/VBoxContainer/Main_menu" to="." method="_on_main_menu_pressed"]

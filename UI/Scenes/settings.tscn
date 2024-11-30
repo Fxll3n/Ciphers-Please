@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://k2rbkehygmjk"]
+
+[ext_resource type="Script" path="res://UI/scripts/settings.gd" id="1_pjeso"]
+[ext_resource type="StyleBox" uid="uid://b2oqudj0kg28q" path="res://assets/buttons/pressed.tres" id="5_yyl4j"]
+[ext_resource type="StyleBox" uid="uid://blot0lb4f5ttr" path="res://assets/buttons/Normal.tres" id="6_73p85"]
+[ext_resource type="AudioStream" uid="uid://corf511jwai36" path="res://assets/sfx/alarm_triple_beep.wav" id="7_ooctq"]
+[ext_resource type="Script" path="res://UI/scripts/volume_slider.gd" id="8_jjvjt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_splg2"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pjeso")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 648.0
+color = Color(0.130772, 0.130772, 0.130772, 1)
+
+[node name="MusicSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 919.0
+offset_top = 125.0
+offset_right = 1102.0
+offset_bottom = 141.0
+script = ExtResource("8_jjvjt")
+bus = "Music"
+
+[node name="Master" type="Label" parent="."]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 72.0
+offset_right = 216.0
+offset_bottom = 95.0
+theme_override_colors/font_color = Color(0, 0.823529, 0, 1)
+text = "Master Sound"
+
+[node name="SFXSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 487.0
+offset_top = 125.0
+offset_right = 670.0
+offset_bottom = 141.0
+script = ExtResource("8_jjvjt")
+bus = "SFX"
+
+[node name="SFX" type="Label" parent="."]
+layout_mode = 0
+offset_left = 534.0
+offset_top = 72.0
+offset_right = 615.0
+offset_bottom = 95.0
+theme_override_colors/font_color = Color(0, 0.823529, 0, 1)
+text = "SFX Sound
+"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -89.0
+offset_right = 245.0
+grow_vertical = 0
+theme_override_colors/font_hover_color = Color(0, 0.564706, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.564706, 0, 1)
+theme_override_colors/font_color = Color(0, 0.564706, 0, 1)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_splg2")
+theme_override_styles/pressed = ExtResource("5_yyl4j")
+theme_override_styles/normal = ExtResource("6_73p85")
+text = "Back"
+
+[node name="Music" type="Label" parent="."]
+layout_mode = 0
+offset_left = 965.0
+offset_top = 72.0
+offset_right = 1064.0
+offset_bottom = 95.0
+theme_override_colors/font_color = Color(0, 0.823529, 0, 1)
+text = "Music Sound
+"
+
+[node name="MasterSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 125.0
+offset_right = 249.0
+offset_bottom = 141.0
+script = ExtResource("8_jjvjt")
+bus = "Master"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_ooctq")
+bus = &"SFX"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 532.0
+offset_top = 141.0
+offset_right = 632.0
+offset_bottom = 203.0
+text = "Test SFX"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
