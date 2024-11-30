@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dq1qnbe5se5f5"]
+[gd_scene load_steps=8 format=3 uid="uid://dq1qnbe5se5f5"]
 
 [ext_resource type="Script" path="res://scripts/objects/note.gd" id="1_1tmab"]
-[ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="1_r0ee2"]
 [ext_resource type="PackedScene" uid="uid://x2tom3xqp3gx" path="res://scenes/objects/note_ui.tscn" id="3_8k4ao"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_rfww2"]
@@ -42,6 +41,9 @@ void vertex() {
 		float offset = y_fold - VERTEX.y;
 		VERTEX.y -= cos(fold_rad) * offset - offset;
 		VERTEX.z += sin(fold_rad) * offset;
+
+		NORMAL.y = sin(fold_rad);
+		NORMAL.z = cos(fold_rad);
 	}
 }
 
@@ -100,13 +102,6 @@ surface_material_override/0 = SubResource("ShaderMaterial_6nitg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_i7p4x")
-
-[node name="ZoomTarget3D" type="Node3D" parent="."]
-script = ExtResource("1_r0ee2")
-
-[node name="Camera3D" type="Camera3D" parent="ZoomTarget3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.125)
-visible = false
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true

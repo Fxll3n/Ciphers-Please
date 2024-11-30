@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var Camera = $PlayerCam as CustomCamera
 @onready var Board = $Board
-@onready var Terminal = $UglyComputer/Screen/Viewport/Terminal
+@onready var Terminal = $Screen/Viewport/Terminal
 @onready var Clock = $Clock
 @onready var gui = $GUI
 
@@ -25,6 +25,10 @@ func _ready() -> void:
 		var note : Note = NoteScene.instantiate()
 		note.task = task
 		Board.attach_note(note)
+	
+	# Required so that PickedNotePlaceholder is visible
+	Camera.visible = true
+	
 	Clock.time = day_start
 	Clock.alarm_time = day_end
 	start_day()
@@ -62,23 +66,37 @@ func _on_board_note_picked(note: Note) -> void:
 	Camera.zoom_out()
 
 
-func _on_player_cam_focusing(node: Node3D) -> void:
-	if node == $UglyComputer/Screen:
+func _on_player_cam_node_clicked(node: Node3D) -> void:
+	if node == $Screen:
 		if note_in_hand != null and note_on_screen == null:
 			# Move variables around
 			note_on_screen = note_in_hand
 			note_in_hand = null
 			
 			# Move note to computer
-			note_on_screen.reparent($UglyComputer/NotePlaceholder)
+			note_on_screen.reparent($Screen/NotePlaceholder)
 			var tween = get_tree().create_tween()
 			tween.tween_property(note_on_screen, "transform", Transform3D(), 1.0)
 			# Load the task when animation is over
 			tween.tween_callback(Terminal.load_task.bind(note_on_screen.task))
 	
 	# TODO: Do we allow putting it back if player clicks the board?
-	# TODO: If player clicks the trash, bye bye note
 
+	# If player clicks the trash, bye bye note
+	if node == $Trashcan:
+		if note_in_hand != null:
+			# Move variables around
+			var note : Node3D = note_in_hand
+			note_in_hand = null
+
+			# Drop animation for note along with trash SFX
+			var tween = get_tree().create_tween()
+			tween.tween_property(note, "position:y", -1, 1.0)
+			tween.tween_callback(note.queue_free)
+			$Trashcan/TrashcanStreamPlayer.play()
+			
+			if note_on_screen == null:
+				Board.can_pick_tasks = true
 
 func _on_clock_alarm_triggered(time: int) -> void:
 	if time >= day_end:

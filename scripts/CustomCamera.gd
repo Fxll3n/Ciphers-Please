@@ -34,6 +34,8 @@ enum State {FREE, ZOOM_IN, LOCKED, ZOOM_OUT}
 @export var experimentalRotationSmoothing: bool = true
 @export_range(0, 1, 0.05) var stickDeadzone = 0.15
 
+## Signal emitted when a target is clicked in free camera mode
+signal node_clicked(Node3D)
 ## Signal emitted when the camera starts moving toward a new target
 signal focusing(Node3D)
 
@@ -69,6 +71,9 @@ func _physics_process(delta: float) -> void:
 	# Target picking, only works when camera is free
 	if state == State.FREE and Input.is_action_just_pressed("pick_object"):
 		var collider = $ObjectPickerRay.get_collider()
+		if collider != null:
+			node_clicked.emit(collider)
+		
 		if collider is ZoomTarget3D:
 			zoom_in(collider)
 		elif collider is Node3D:
@@ -76,7 +81,6 @@ func _physics_process(delta: float) -> void:
 				if child is ZoomTarget3D:
 					zoom_in(child)
 					return
-			print_debug("Collider", collider, "has no valid target children")
 			
 	if state == State.LOCKED and Input.is_action_just_pressed("go_back"):
 		zoom_out()
@@ -95,7 +99,9 @@ func _rotate_camera(delta_rad: Vector2, time_delta: float):
 
 ## Focus the camera on a new target
 func zoom_in(target: ZoomTarget3D) -> void:
-	assert(state == State.FREE or state == State.LOCKED)
+	if not (state == State.FREE or state == State.LOCKED):
+		push_warning("zoom_in called while camera was not free nor locked")
+		return
 	state = State.ZOOM_IN
 	
 	# Store current position and target destination
@@ -113,7 +119,9 @@ func zoom_in(target: ZoomTarget3D) -> void:
 ## Make the camera go back to the nth target, with 0 being free camera
 ## Negative `target_level` means go to nth previous target
 func zoom_out(target_level: int = -1) -> void:
-	assert(state == State.LOCKED)
+	if state != State.LOCKED:
+		push_warning("zoom_out called while camera was not locked")
+		return
 	if target_level < 0:
 		target_level = origins.size() + target_level
 	assert(0 <= target_level and target_level < origins.size())
@@ -130,7 +138,9 @@ func zoom_out(target_level: int = -1) -> void:
 
 ## Make the camera change its current target
 func swap_to(new_target: ZoomTarget3D) -> void:
-	assert(state == State.LOCKED)
+	if state != State.LOCKED:
+		push_warning("swap_to called while camera was not locked")
+		return
 	assert(targets.size() > 0)
 	
 	# Drop previous target

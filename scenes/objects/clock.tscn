@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" path="res://scripts/objects/clock.gdshader" id="1_q5ht4"]
 [ext_resource type="Script" path="res://scripts/objects/clock.gd" id="1_scwsm"]
-[ext_resource type="ArrayMesh" uid="uid://c5f2lffvfx6ca" path="res://assets/meshes/ugly_clock.obj" id="4_bgt57"]
+[ext_resource type="PackedScene" uid="uid://o76mvfgj121w" path="res://assets/scene_gltf/Clock.glb" id="2_xkpy7"]
 [ext_resource type="Texture2D" uid="uid://4mcfop2bdjrv" path="res://assets/clock_digit.png" id="4_drvff"]
 [ext_resource type="AudioStream" uid="uid://corf511jwai36" path="res://assets/sfx/alarm_triple_beep.wav" id="5_q8022"]
 
@@ -50,10 +50,7 @@ region = Rect2(80, 0, 16, 128)
 [node name="Clock" type="Node3D"]
 script = ExtResource("1_scwsm")
 
-[node name="UglyClock" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.999999, 0.000991102, -0.000613677, -0.000991724, 0.999999, -0.00102634, 0.000612671, 0.00102694, 0.999999, 4.58652e-06, 2.65688e-05, -1.16825e-05)
-mesh = ExtResource("4_bgt57")
-metadata/_edit_group_ = true
+[node name="ClockMesh" parent="." instance=ExtResource("2_xkpy7")]
 
 [node name="ClockScreen" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.185494, 2.51014e-05, -4.01153e-05, -8.52084e-05, 0.0379243, 0.545545, 6.0939e-05, -0.023379, 0.884956, -1.97708e-05, 0.0227711, 0.0517782)
