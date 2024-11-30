@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=26 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
 [ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/objects/screen.gd" id="3_lbevc"]
 [ext_resource type="PackedScene" uid="uid://7qlggh5i3318" path="res://assets/scene_gltf/Scene.glb" id="4_7g7d6"]
 [ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://terminal.tscn" id="4_gf7xn"]
+[ext_resource type="PackedScene" uid="uid://tom8wrjo8cvu" path="res://assets/scene_gltf/Wall.glb" id="5_bd2vv"]
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
 [ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
 [ext_resource type="PackedScene" uid="uid://o6k4mux2ha8b" path="res://scenes/objects/board.tscn" id="10_n5ycv"]
@@ -49,12 +50,12 @@ script = ExtResource("1_oqg2a")
 metadata/_edit_lock_ = true
 
 [node name="PlayerCam" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.990887, 0.134696, 0, -0.134696, 0.990887, 0, 1.06637, 0.823151)
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.06637, 0.823151)
 visible = false
 current = true
 script = ExtResource("3_fm5oh")
-maxFOV_x = 1.22173
-maxFOV_y = 0.523599
+maxFOV_x = 1.13446
+maxFOV_y = 0.436332
 metadata/_edit_group_ = true
 
 [node name="ObjectPickerRay" type="RayCast3D" parent="PlayerCam"]
@@ -81,6 +82,8 @@ texture = ExtResource("3_70pis")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, -0.05, -0.15)
 
 [node name="Scene" parent="." instance=ExtResource("4_7g7d6")]
+
+[node name="Wall" parent="Scene" instance=ExtResource("5_bd2vv")]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Scene"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.665679, 2.54266, 1.11461)
@@ -110,7 +113,7 @@ transform = Transform3D(1.04167, 0, 0, 0, 1.04167, 0, 0, 0, 1.04167, 0, 0, 0.234
 visible = false
 
 [node name="NotePlaceholder" type="Node3D" parent="Screen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.223, 0.075, 0.03)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.216322, 0.075, 0.03)
 
 [node name="Clock" parent="." instance=ExtResource("6_4jp77")]
 transform = Transform3D(0.787265, 0, 0.142177, 0, 0.8, 0, -0.142177, 0, 0.787265, -0.407496, 0.766, -0.0947458)
