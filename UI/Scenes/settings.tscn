@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://k2rbkehygmjk"]
+[gd_scene load_steps=7 format=3 uid="uid://k2rbkehygmjk"]
 
 [ext_resource type="Script" path="res://UI/scripts/settings.gd" id="1_pjeso"]
-[ext_resource type="PackedScene" uid="uid://dcutibay8pkp8" path="res://UI/Scenes/muic_options.tscn" id="2_1v04b"]
-[ext_resource type="PackedScene" uid="uid://bqedu3mvt1ib2" path="res://UI/Scenes/masteroptions.tscn" id="3_ipdk1"]
-[ext_resource type="PackedScene" uid="uid://crcrh55sb1i3h" path="res://UI/Scenes/sfxoptions.tscn" id="4_utkb6"]
 [ext_resource type="StyleBox" uid="uid://b2oqudj0kg28q" path="res://assets/buttons/pressed.tres" id="5_yyl4j"]
 [ext_resource type="StyleBox" uid="uid://blot0lb4f5ttr" path="res://assets/buttons/Normal.tres" id="6_73p85"]
 [ext_resource type="AudioStream" uid="uid://corf511jwai36" path="res://assets/sfx/alarm_triple_beep.wav" id="7_ooctq"]
+[ext_resource type="Script" path="res://UI/scripts/volume_slider.gd" id="8_jjvjt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_splg2"]
 
@@ -25,13 +23,14 @@ offset_right = 1153.0
 offset_bottom = 648.0
 color = Color(0.130772, 0.130772, 0.130772, 1)
 
-[node name="MuicOptions" parent="." instance=ExtResource("2_1v04b")]
-layout_mode = 1
+[node name="MusicSlider" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 919.0
 offset_top = 125.0
-offset_right = -217.0
-offset_bottom = -340.0
-rotation = -1.5708
+offset_right = 1102.0
+offset_bottom = 141.0
+script = ExtResource("8_jjvjt")
+bus = "Music"
 
 [node name="Master" type="Label" parent="."]
 layout_mode = 0
@@ -42,13 +41,14 @@ offset_bottom = 95.0
 theme_override_colors/font_color = Color(0, 0.823529, 0, 1)
 text = "Master Sound"
 
-[node name="Sfxoptions" parent="." instance=ExtResource("4_utkb6")]
-layout_mode = 1
+[node name="SFXSlider" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 487.0
 offset_top = 125.0
-offset_right = -649.0
-offset_bottom = -340.0
-rotation = -1.5708
+offset_right = 670.0
+offset_bottom = 141.0
+script = ExtResource("8_jjvjt")
+bus = "SFX"
 
 [node name="SFX" type="Label" parent="."]
 layout_mode = 0
@@ -87,13 +87,14 @@ theme_override_colors/font_color = Color(0, 0.823529, 0, 1)
 text = "Music Sound
 "
 
-[node name="Masteroptions" parent="." instance=ExtResource("3_ipdk1")]
-layout_mode = 1
+[node name="MasterSlider" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 66.0
 offset_top = 125.0
-offset_right = -1070.0
-offset_bottom = -340.0
-rotation = -1.5708
+offset_right = 249.0
+offset_bottom = 141.0
+script = ExtResource("8_jjvjt")
+bus = "Master"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ooctq")
@@ -105,6 +106,7 @@ offset_left = 532.0
 offset_top = 141.0
 offset_right = 632.0
 offset_bottom = 203.0
+text = "Test SFX"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

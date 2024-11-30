@@ -7,10 +7,6 @@ func _ready():
 		General.scene_before = "Menu"
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://scenes/worlds/office.tscn")
