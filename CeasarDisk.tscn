@@ -1,15 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://do8gi6p2vyyv4"]
+[gd_scene load_steps=7 format=3 uid="uid://do8gi6p2vyyv4"]
 
 [ext_resource type="Script" path="res://CeasarDisk.gd" id="1_6hk24"]
 [ext_resource type="Texture2D" uid="uid://but7pckvouk3n" path="res://BottomWheel (1).png" id="2_ypccl"]
 [ext_resource type="Texture2D" uid="uid://cp5xtsce8c0q7" path="res://TopWheel (1).png" id="3_5gnnd"]
+[ext_resource type="FontFile" uid="uid://dnkeqwoqftiar" path="res://assets/fonts/veteran typewriter.ttf" id="4_abvl7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a54ji"]
 radius = 363.189
 
+[sub_resource type="LabelSettings" id="LabelSettings_whduv"]
+font = ExtResource("4_abvl7")
+font_size = 96
+font_color = Color(0.0253486, 0.166073, 0.386203, 1)
+
 [node name="CeasarDisk" type="Node2D"]
 z_index = 5
-position = Vector2(101, 137)
+position = Vector2(144, 256)
 scale = Vector2(0.36, 0.36)
 script = ExtResource("1_6hk24")
 
@@ -24,6 +30,16 @@ texture = ExtResource("3_5gnnd")
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CircleShape2D_a54ji")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -111.0
+offset_right = 111.0
+offset_bottom = 133.0
+text = "1"
+label_settings = SubResource("LabelSettings_whduv")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

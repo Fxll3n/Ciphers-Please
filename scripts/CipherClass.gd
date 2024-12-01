@@ -44,7 +44,6 @@ static func encryptVigenere(plaintext: String, key: String) -> String:
 		var key_pos = alphabet.find(key_char)
 		var new_pos = (text_pos + key_pos) % alphabet.length()
 
-		print("Plaintext Char:", current_char, "Key Char:", key_char, "Text Pos:", text_pos, "Key Pos:", key_pos, "New Pos:", new_pos)
 		ciphertext += alphabet[new_pos]
 		key_index += 1
 

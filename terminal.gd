@@ -44,6 +44,8 @@ func load_task(task: Task) -> void:
 			note.fit_content = true
 			note.text = "The Vigenère Cipher is a polyalphabetic substitution cipher that shifts letters using multiple Caesar ciphers with varying keys. A keyword is used to determine the shifts. To decrypt, match each encrypted letter with the corresponding letter of the key to reverse the shift, repeating for the entire message."
 			var table = VigenereTable.new()
+			table.key = task.key
+			table.encrypt = task.msg_type == Data.MessageType.Outgoing
 			NotesContainer.add_child(table)
 			table.custom_minimum_size = Vector2(300, 500)
 		Data.CipherType.Rail:
@@ -76,6 +78,11 @@ func unload_task() -> void:
 		transmission_text.text = ''
 		text_edit.text = ''
 		current_task = null
+
+	# Remove existing children (except RichTextLabel and HSeparator)
+	for child in NotesContainer.get_children():
+		if child is not RichTextLabel and child is not HSeparator:
+			child.queue_free()
 
 func _on_exit_pressed() -> void:
 	terminal_closed.emit()
