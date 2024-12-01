@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://do8gi6p2vyyv4"]
+
+[ext_resource type="Script" path="res://CeasarDisk.gd" id="1_6hk24"]
+[ext_resource type="Texture2D" uid="uid://but7pckvouk3n" path="res://BottomWheel (1).png" id="2_ypccl"]
+[ext_resource type="Texture2D" uid="uid://cp5xtsce8c0q7" path="res://TopWheel (1).png" id="3_5gnnd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a54ji"]
+radius = 363.189
+
+[node name="CeasarDisk" type="Node2D"]
+position = Vector2(101, 137)
+scale = Vector2(0.36, 0.36)
+script = ExtResource("1_6hk24")
+
+[node name="BottomWheel" type="Sprite2D" parent="."]
+z_index = -1
+rotation = 0.000735998
+texture = ExtResource("2_ypccl")
+
+[node name="TopWheel" type="Sprite2D" parent="."]
+texture = ExtResource("3_5gnnd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_a54ji")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

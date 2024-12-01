@@ -3,7 +3,7 @@ class_name Note extends Area3D
 @export var task: Task
 @export var folded: bool = true
 
-@onready var label: Label = $SubViewport/NoteUI/Label
+@onready var label: RichTextLabel = $SubViewport/NoteUI/Label
 @onready var stampTexture = $SubViewport/NoteUI/TextureRect
 
 @onready var folded_angle_deg = randf_range(140, 175)

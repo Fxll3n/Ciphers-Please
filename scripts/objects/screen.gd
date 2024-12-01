@@ -32,3 +32,4 @@ func _on_input_event(_camera: Node, event: InputEvent, event_position: Vector3, 
 	if event is InputEventMouse:
 		event.global_position = pos_2d
 	$Viewport.push_input(event)
+	print("ScreenEvent: ", event)

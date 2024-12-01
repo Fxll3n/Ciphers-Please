@@ -27,7 +27,7 @@ MenuAudio="*res://scenes/objects/Main_menu_audio.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 
