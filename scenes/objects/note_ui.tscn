@@ -52,7 +52,6 @@ Difficulty: 1            Reward: 22¢
 Key: 13
 
 If you read this you're fired"
-label_settings = SubResource("LabelSettings_8bbjo")
 autowrap_mode = 3
 
 [node name="TextureRect" type="TextureRect" parent="."]
