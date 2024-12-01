@@ -195,34 +195,16 @@ func _show_end_day_screen():
 	new_day_screen.show()
 
 @onready var final_day_screen: Control = $Black/FinalDayScreen
-@onready var big_red_gradient: Sprite2D = $Black/FinalDayScreen/BigRedGradient
-@onready var final_text: Label = $Black/FinalDayScreen/FinalText
 @onready var thanks: Label = $Black/FinalDayScreen/Thanks
-@onready var title_screen: Button = $Black/FinalDayScreen/TitleScreen
+@onready var final_animation: AnimationPlayer = $Black/FinalDayScreen/FinalAnimation
 
 func _show_end_game_screen(saved_the_day: bool = false):
 	final_day_screen.show()
-	final_text.visible_ratio = 0
-	thanks.visible_ratio = 0
-	title_screen.modulate.a = 0
-	var tween = get_tree().create_tween()
-	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	if saved_the_day:
-		big_red_gradient.hide()
-		final_text.add_theme_color_override("font_color", Color.WHITE)
-		final_text.text = "The nuclear threat was a false alarm. Your decision saved the day, and prevented massive casualties."
+		final_animation.play("good_end")
 	else:
-		big_red_gradient.show()
-		tween.parallel().tween_property(big_red_gradient, "modulate:a", 1, 5)
-		tween.parallel().tween_property($MainMusic, "pitch_scale", 0.67, 5)
-		tween.parallel().tween_property($MainMusic, "volume_db", -15, 8)
-		final_text.add_theme_color_override("font_color", Color.DARK_RED)
-		final_text.text = "Your actions caused nuclear retaliation across the globe, plunging humanity into a new era of darkness."
 		thanks.text = "Nonetheless, thank you for playing!"
-	tween.parallel().tween_property(final_text, "visible_ratio", 1, 8)
-	tween.tween_interval(4)
-	tween.tween_property(thanks, "visible_ratio", 1, 2)
-	tween.tween_property(title_screen, "modulate:a", 1, 2)
+		final_animation.play("bad_end")
 
 func _on_start_day_pressed() -> void:
 	get_tree().paused = false

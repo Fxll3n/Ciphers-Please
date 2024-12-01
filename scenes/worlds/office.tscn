@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=37 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
 [ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
@@ -69,6 +69,332 @@ height = 360
 fill = 1
 fill_from = Vector2(0.5, -0.2)
 fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Animation" id="Animation_e3tcm"]
+resource_name = "good_end"
+length = 15.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinalTextBad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FinalTextGood:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FinalTextGood:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BigRedGradient:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iigww"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinalTextBad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FinalTextGood:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FinalTextGood:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BigRedGradient:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FinalTextBad:visible_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../MainMusic:pitch_scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../../MainMusic:volume_db")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Thanks:visible_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TitleScreen:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l673y"]
+resource_name = "bad_end"
+length = 15.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinalTextBad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FinalTextGood:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BigRedGradient:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4, 12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FinalTextBad:visible_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../MainMusic:pitch_scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(4, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.67]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../MainMusic:volume_db")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(8, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -15.0]
+}
+
+[sub_resource type="Animation" id="Animation_012lr"]
+resource_name = "thanks"
+length = 8.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Thanks:visible_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TitleScreen:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(6, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nv1hc"]
+_data = {
+"RESET": SubResource("Animation_iigww"),
+"bad_end": SubResource("Animation_l673y"),
+"good_end": SubResource("Animation_e3tcm"),
+"thanks": SubResource("Animation_012lr")
+}
 
 [node name="Office" type="Node3D"]
 script = ExtResource("1_oqg2a")
@@ -308,7 +634,8 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(576, 176)
 texture = SubResource("GradientTexture2D_0tjx5")
 
-[node name="FinalText" type="Label" parent="Black/FinalDayScreen"]
+[node name="FinalTextGood" type="RichTextLabel" parent="Black/FinalDayScreen"]
+visible = false
 custom_minimum_size = Vector2(512, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -316,35 +643,76 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -14.0
-offset_right = 20.0
-offset_bottom = 14.0
+offset_left = -448.0
+offset_top = -140.0
+offset_right = 448.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Oh no because of you the world is gonna like end"
-autowrap_mode = 3
-visible_characters_behavior = 1
+bbcode_enabled = true
+text = "[color=#999]The air is thick with dread, the impending doom of all you’ve ever known suffocates your mind.
 
-[node name="Thanks" type="Label" parent="Black/FinalDayScreen"]
+A note suddenly appears: “[color=white]Hoax transmissions infiltrating system, be vigilant.[/color]”
+
+Your sigh of relief is interrupted by another note: “[color=white]You have breached nuclear threat protocol. Position terminated. You dishonour the Motherland.[/color]”
+
+You stand disgraced in the eyes of the Motherland. However, your disobedience has kept the shadows of nuclear retaliation at bay, for now.[/color]"
+fit_content = true
+visible_characters = 0
+visible_characters_behavior = 1
+visible_ratio = 0.0
+
+[node name="FinalTextBad" type="RichTextLabel" parent="Black/FinalDayScreen"]
+visible = false
+custom_minimum_size = Vector2(512, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = 188.0
-offset_right = 487.0
-offset_bottom = 216.0
+offset_left = -448.0
+offset_top = -140.0
+offset_right = 448.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[color=#c66]You forward the nuclear threat to your superiors.
+
+The response is instant: “[color=#f99]Engaging nuclear retaliation. ICBM bases 1, 3, and 6 launching.[/color]”
+
+You sit frozen, your breath shallow, as a second note appears: “[color=#f99]Your vigilance and loyalty to the Motherland are duly noted. Wage increased by 1¢.[/color]”
+
+The praise is hollow, swallowed by the dread that consumes you. Your unquestioning obedience has sealed humanity’s grim fate.
+[/color]"
+fit_content = true
+visible_characters_behavior = 1
+
+[node name="Thanks" type="Label" parent="Black/FinalDayScreen"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = 220.0
+offset_right = 256.0
+offset_bottom = 252.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.695503, 0.695503, 0.695503, 1)
 text = "Thank you for playing!"
+horizontal_alignment = 1
+visible_characters = 0
 visible_characters_behavior = 1
+visible_ratio = 0.0
 
 [node name="TitleScreen" type="Button" parent="Black/FinalDayScreen"]
 process_mode = 3
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -357,6 +725,14 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.76662, 0.76662, 0.76662, 1)
 text = "TITLE SCREEN"
+
+[node name="FinalAnimation" type="AnimationPlayer" parent="Black/FinalDayScreen"]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_nv1hc")
+}
+next/good_end = &"thanks"
+next/bad_end = &"thanks"
 
 [node name="GUI" type="CanvasLayer" parent="."]
 process_mode = 2
