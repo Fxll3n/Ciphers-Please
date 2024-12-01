@@ -2,17 +2,15 @@ extends Control
 class_name RailTool
 
 # The message to display
-var message: String = "HelloWorldHelloWorldHelloWorldHelloWorldHelloWorld"
+var message: String
 # List to hold references to letter labels
 var letter_labels: Array = []
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	# Create labels for each letter in the message
-	create_letter_row(message)
+
 
 # Function to create letter labels
-func create_letter_row(message: String):
+func create_letter_row():
 	var x_offset = 0  # X-position offset to arrange the letters in a row
 	var y_offset = 0
 	for i in range(message.length()):
@@ -33,7 +31,7 @@ func create_letter_row(message: String):
 		})
 		
 		# Update the offset to position the next letter
-		x_offset += 35  # Move the next letter to the right
+		x_offset += 15  # Move the next letter to the right
 		if x_offset > 300:
 			x_offset = 0
 			y_offset += 35
