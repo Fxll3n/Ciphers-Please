@@ -474,7 +474,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.216322, 0.075, 0.03)
 [node name="Clock" parent="." instance=ExtResource("6_4jp77")]
 transform = Transform3D(0.787265, 0, 0.142177, 0, 0.8, 0, -0.142177, 0, 0.787265, -0.407496, 0.766, -0.0947458)
 interval = 2.0
-increment = 5
 
 [node name="ClockArea" type="Area3D" parent="Clock"]
 metadata/_edit_lock_ = true

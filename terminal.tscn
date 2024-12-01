@@ -185,6 +185,10 @@ scroll_active = false
 [node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="NotesText" type="RichTextLabel" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
+layout_mode = 2
+fit_content = true
+
 [connection signal="pressed" from="TabBarSplit/Panel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Submit" to="." method="_on_submit_pressed"]
 [connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Trash" to="." method="_on_trash_pressed"]
