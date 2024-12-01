@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://bemhrp7doxahy"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_och6f"]
+
+[resource]
+script = ExtResource("1_och6f")
+msg = "Support for President is extremely high. Stripes on their flag are more like prison bars. These yanks do not know true freedom. Glory to the Motherland."
+msg_type = 1
+day = 3
+conditions = Array[ExtResource("1_och6f")]([])
+from_to = "Viktor Baranov"
+difficulty = 2
+pay = 12
+key = "13"
+cipher_type = 1

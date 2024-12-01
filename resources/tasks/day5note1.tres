@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://gfxgtd0mw4i1"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_h1vdp"]
+
+[resource]
+script = ExtResource("1_h1vdp")
+msg = "SENSORS SHOW MASS INFRARED HEADING EAST. CRITICAL NUCLEAR ATTACK IMMINENT. RETALIATION CRUCIAL, REPORT IMMEDIATELY. MOTHERLAND RELIES ON YOU, ACT NOW!"
+msg_type = 1
+day = 5
+conditions = Array[ExtResource("1_h1vdp")]([])
+from_to = "Alexander Smirnov"
+difficulty = 5
+pay = 15
+key = ""
+cipher_type = 5

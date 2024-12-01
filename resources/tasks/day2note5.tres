@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://85x6rtnc7ohg"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_fkuye"]
+
+[resource]
+script = ExtResource("1_fkuye")
+msg = "If your hands must move quickly, let them move wisely comrade. Your position is not to be underestimated."
+msg_type = 1
+day = 2
+from_to = "Yuri Kuznetsov"
+difficulty = 4
+pay = 5
+key = "PRAVDA"
+cipher_type = 3

@@ -5,13 +5,19 @@ extends Node3D
 @onready var Terminal = $Screen/Viewport/Terminal
 @onready var Clock = $Clock
 @onready var gui = $GUI
+@onready var end_day_screen: Control = $Clock/EndDayScreen
 
 
 @export var day_start: int = 6*60
 @export var day_end: int = 18*60
 
 var last_pressed: int = -1000
-var last_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
+var last_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
+
+var stats_tasks_completed: int = 0
+var stats_tasks_trashed: int = 0
+var stats_money_gained: int = 0
+var trashed_final_note: bool = false
 
 ## Note currently held by the player
 var note_in_hand: Note = null
@@ -20,18 +26,17 @@ var note_on_screen: Note = null
 @onready var NoteScene = preload("res://scenes/objects/note.tscn")
 
 func _ready() -> void:
-	# Add today's tasks to the board
-	for task in Game.day_tasks:
-		var note : Note = NoteScene.instantiate()
-		note.task = task
-		Board.attach_note(note)
+	Game.connect("new_task", _on_new_task)
+	Game.connect("day_tasks_finished", end_day_screen.show)
 	
 	# Required so that PickedNotePlaceholder is visible
 	Camera.visible = true
 	
 	Clock.time = day_start
 	Clock.alarm_time = day_end
+	Board.can_pick_tasks = false # Disable sound upon adding new notes
 	start_day()
+	Board.can_pick_tasks = true
 	General.scene_before = "Main"
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -85,6 +90,9 @@ func _on_player_cam_node_clicked(node: Node3D) -> void:
 	# If player clicks the trash, bye bye note
 	if node == $Trashcan:
 		if note_in_hand != null:
+			note_in_hand.task.trashed = true
+			stats_tasks_trashed += 1
+			
 			# Move variables around
 			var note : Node3D = note_in_hand
 			note_in_hand = null
@@ -97,25 +105,116 @@ func _on_player_cam_node_clicked(node: Node3D) -> void:
 			
 			if note_on_screen == null:
 				Board.can_pick_tasks = true
+			if note.task.day == Game.final_day:
+				trashed_final_note = true
+			Game.on_task_trashed()
+
+func _on_new_task(task: Task):
+	task.available = true
+	# Add task to the board
+	var note : Note = NoteScene.instantiate()
+	note.task = task
+	Board.attach_note(note)
+
+func _on_terminal_task_complete() -> void:
+	Terminal.unload_task()
+	assert(note_on_screen != null)
+	note_on_screen.task.completed = true
+	stats_tasks_completed += 1
+	stats_money_gained += note_on_screen.task.pay
+	if note_on_screen.task.day == Game.final_day:
+		trashed_final_note = false
+	
+	$Screen/Viewport/Terminal/SubmitSound.play()
+	Camera.zoom_out()
+	note_on_screen.queue_free()
+	note_on_screen = null
+	Board.can_pick_tasks = true
+	get_tree().create_timer(1).timeout.connect(Game.on_task_completed)
+
+func _on_terminal_task_deleted() -> void:
+	Terminal.unload_task()
+	assert(note_on_screen != null)
+	note_on_screen.task.trashed = true
+	stats_tasks_trashed += 1	
+	if note_on_screen.task.day == Game.final_day:
+		trashed_final_note = true
+	
+	$Trashcan/TrashcanStreamPlayer.play()
+	Camera.zoom_out()
+	note_on_screen.queue_free()
+	note_on_screen = null
+	Board.can_pick_tasks = true
+	get_tree().create_timer(1).timeout.connect(Game.on_task_trashed)
 
 func _on_clock_alarm_triggered(time: int) -> void:
 	if time >= day_end:
-		end_day()
+		# Wait a bit so the player can realize the day is ending
+		get_tree().create_timer(5).timeout.connect(end_day)
 
 
 func start_day() -> void:
+	end_day_screen.hide()
+	stats_tasks_completed = 0
+	stats_tasks_trashed = 0
+	stats_money_gained = 0
+	Clock.time = day_start
+	Clock.alarm_time = day_end
+	# No trashcan on final day
+	$Trashcan.visible = Game.day != Game.final_day
+	$Trashcan/CollisionShape3D.disabled = Game.day == Game.final_day
 	# Fade from black
 	$Black.modulate.a = 1
 	get_tree().create_tween().tween_property($Black, "self_modulate:a", 0, 1.0)
+	Game.start_day()
 
 
 func end_day() -> void:
+	end_day_screen.hide()
 	var tween = get_tree().create_tween()
-	# Wait a bit so the player can realize the day is ending
-	tween.tween_interval(5)
 	tween.tween_callback(Camera.zoom_out)
 	tween.tween_property($Black, "self_modulate:a", 1, 1.0)
-	tween.tween_callback(Game.end_day)
+	tween.tween_callback(_show_end_day_screen)
+
+@onready var new_day_screen: VBoxContainer = $Black/NewDayScreen
+@onready var day_over: Label = $Black/NewDayScreen/DayOver
+@onready var stats_label: Label = $Black/NewDayScreen/StatsLabel
+@onready var start_day_button: Button = $Black/NewDayScreen/StartDay
+
+func _show_end_day_screen():
+	get_tree().paused = true
+	last_mouse_mode = Input.mouse_mode
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if Game.day == Game.final_day:
+		_show_end_game_screen(trashed_final_note)
+		return
+	day_over.text = "DAY %d OVER" % Game.day
+	stats_label.text = "Tasks completed: %d\nTasks trashed: %d\nMoney gained: %d" % [stats_tasks_completed, stats_tasks_trashed, stats_money_gained]
+	Game.day += 1
+	start_day_button.text = "START DAY %d" % Game.day
+	new_day_screen.show()
+
+@onready var final_day_screen: Control = $Black/FinalDayScreen
+@onready var thanks: Label = $Black/FinalDayScreen/Thanks
+@onready var final_animation: AnimationPlayer = $Black/FinalDayScreen/FinalAnimation
+
+func _show_end_game_screen(saved_the_day: bool = false):
+	final_day_screen.show()
+	if saved_the_day:
+		final_animation.play("good_end")
+	else:
+		thanks.text = "Nonetheless, thank you for playing!"
+		final_animation.play("bad_end")
+
+func _on_start_day_pressed() -> void:
+	get_tree().paused = false
+	Input.mouse_mode = last_mouse_mode
+	new_day_screen.hide()
+	# Hack to avoid note sound while still not breaking in case day ends while working
+	var old_value = Board.can_pick_tasks
+	Board.can_pick_tasks = false
+	start_day()
+	Board.can_pick_tasks = old_value
 
 func _on_resume_pressed():
 	get_tree().paused = false

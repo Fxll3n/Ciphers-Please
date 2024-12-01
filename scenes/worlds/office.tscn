@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=37 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
 [ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
@@ -8,9 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://terminal.tscn" id="4_gf7xn"]
 [ext_resource type="PackedScene" uid="uid://tom8wrjo8cvu" path="res://assets/scene_gltf/Wall.glb" id="5_bd2vv"]
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
-[ext_resource type="Script" path="res://scripts/ZoomTarget.gd" id="6_pma3h"]
+[ext_resource type="AudioStream" uid="uid://c76d8xh30brck" path="res://assets/sfx/submitbutton.wav" id="8_orj34"]
 [ext_resource type="PackedScene" uid="uid://o6k4mux2ha8b" path="res://scenes/objects/board.tscn" id="10_n5ycv"]
 [ext_resource type="PackedScene" uid="uid://xti1qf37jief" path="res://assets/scene_gltf/Trashcan.glb" id="10_pp3pg"]
+[ext_resource type="Script" path="res://scenes/worlds/clock_target.gd" id="10_xlk6j"]
 [ext_resource type="AudioStream" uid="uid://bgblt7logjx31" path="res://assets/sfx/trash.wav" id="11_mfhjy"]
 [ext_resource type="StyleBox" uid="uid://b1dqst5a0ojsp" path="res://assets/buttons/Hover_button.tres" id="11_n8dfm"]
 [ext_resource type="StyleBox" uid="uid://b2oqudj0kg28q" path="res://assets/buttons/pressed.tres" id="12_bb8un"]
@@ -18,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://djel1asqls3g1" path="res://assets/music/solvepuzzle.ogg" id="13_jvo82"]
 [ext_resource type="StyleBox" uid="uid://blot0lb4f5ttr" path="res://assets/buttons/Normal.tres" id="13_vuqau"]
 [ext_resource type="PackedScene" uid="uid://k2rbkehygmjk" path="res://UI/Scenes/settings.tscn" id="15_1q2ph"]
+[ext_resource type="FontFile" uid="uid://dnkeqwoqftiar" path="res://assets/fonts/veteran typewriter.ttf" id="15_r6pbc"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_hih8b"]
 size = Vector2(0.327, 0.29)
@@ -35,6 +37,9 @@ size = Vector3(0.327, 0.29, 0)
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1hv4"]
 size = Vector3(0.21, 0.0619507, 0.17)
 
+[sub_resource type="LabelSettings" id="LabelSettings_oqo1o"]
+font_size = 26
+
 [sub_resource type="Environment" id="Environment_43qhm"]
 background_mode = 1
 background_color = Color(0.32, 0.303573, 0.2496, 1)
@@ -44,6 +49,352 @@ glow_enabled = true
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ij4al"]
 height = 0.319101
 radius = 0.169524
+
+[sub_resource type="Theme" id="Theme_dd5yw"]
+default_font = ExtResource("15_r6pbc")
+default_font_size = 24
+Button/colors/font_color = Color(0.47451, 0.85098, 0.392157, 1)
+Button/colors/font_hover_color = Color(0.572333, 0.85, 0.51, 1)
+Button/colors/font_pressed_color = Color(0.39689, 0.71, 0.3266, 1)
+Label/colors/font_color = Color(0.47515, 0.85, 0.391, 1)
+
+[sub_resource type="Gradient" id="Gradient_hpabv"]
+offsets = PackedFloat32Array(0, 0.997636)
+colors = PackedColorArray(0.898275, 6.06447e-06, 6.73831e-07, 1, 0.82881, 2.71939e-06, 5.77569e-07, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0tjx5"]
+gradient = SubResource("Gradient_hpabv")
+width = 1152
+height = 360
+fill = 1
+fill_from = Vector2(0.5, -0.2)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Animation" id="Animation_e3tcm"]
+resource_name = "good_end"
+length = 15.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinalTextBad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FinalTextGood:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FinalTextGood:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BigRedGradient:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iigww"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinalTextBad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FinalTextGood:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FinalTextGood:visible_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BigRedGradient:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FinalTextBad:visible_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../MainMusic:pitch_scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../../MainMusic:volume_db")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Thanks:visible_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TitleScreen:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l673y"]
+resource_name = "bad_end"
+length = 15.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinalTextBad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FinalTextGood:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BigRedGradient:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4, 12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FinalTextBad:visible_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../MainMusic:pitch_scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(4, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.67]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../MainMusic:volume_db")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(8, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -15.0]
+}
+
+[sub_resource type="Animation" id="Animation_012lr"]
+resource_name = "thanks"
+length = 8.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Thanks:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Thanks:visible_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TitleScreen:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(6, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nv1hc"]
+_data = {
+"RESET": SubResource("Animation_iigww"),
+"bad_end": SubResource("Animation_l673y"),
+"good_end": SubResource("Animation_e3tcm"),
+"thanks": SubResource("Animation_012lr")
+}
 
 [node name="Office" type="Node3D"]
 script = ExtResource("1_oqg2a")
@@ -99,6 +450,10 @@ physics_object_picking = true
 
 [node name="Terminal" parent="Screen/Viewport" instance=ExtResource("4_gf7xn")]
 
+[node name="SubmitSound" type="AudioStreamPlayer" parent="Screen/Viewport/Terminal"]
+stream = ExtResource("8_orj34")
+bus = &"SFX"
+
 [node name="QuadMesh" type="MeshInstance3D" parent="Screen"]
 mesh = SubResource("QuadMesh_hih8b")
 skeleton = NodePath("")
@@ -120,7 +475,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.216322, 0.075, 0.03)
 transform = Transform3D(0.787265, 0, 0.142177, 0, 0.8, 0, -0.142177, 0, 0.787265, -0.407496, 0.766, -0.0947458)
 interval = 2.0
 increment = 5
-metadata/_edit_group_ = true
 
 [node name="ClockArea" type="Area3D" parent="Clock"]
 metadata/_edit_lock_ = true
@@ -134,10 +488,62 @@ metadata/_edit_lock_ = true
 [node name="ZoomTarget3D" type="Node3D" parent="Clock/ClockArea"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
 visible = false
-script = ExtResource("6_pma3h")
+script = ExtResource("10_xlk6j")
 
 [node name="Camera3D" type="Camera3D" parent="Clock/ClockArea/ZoomTarget3D"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 0.939693, 0.34202, -2.98023e-08, -0.34202, 0.939693, 2.66389e-08, 0.121305, 0.279746)
+
+[node name="EndDayScreen" type="Control" parent="Clock"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Clock/EndDayScreen"]
+modulate = Color(1, 1, 1, 0.501961)
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="Clock/EndDayScreen/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.5
+offset_top = -18.0
+offset_right = 68.5
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Click on the clock to end your day"
+label_settings = SubResource("LabelSettings_oqo1o")
+
+[node name="EndDayButton" type="Button" parent="Clock/EndDayScreen"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = 136.0
+offset_right = 90.0
+offset_bottom = 196.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GO HOME"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_43qhm")
@@ -178,6 +584,156 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="NewDayScreen" type="VBoxContainer" parent="Black"]
+process_mode = 2
+visible = false
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -11.5
+offset_right = 0.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_dd5yw")
+theme_override_constants/separation = 20
+
+[node name="DayOver" type="Label" parent="Black/NewDayScreen"]
+layout_mode = 2
+text = "DAY 1 OVER"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="Black/NewDayScreen"]
+layout_mode = 2
+text = "Tasks completed:
+Tasks trashed:
+Pay:"
+
+[node name="StartDay" type="Button" parent="Black/NewDayScreen"]
+layout_mode = 2
+text = "START DAY 2"
+
+[node name="FinalDayScreen" type="Control" parent="Black"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_dd5yw")
+
+[node name="BigRedGradient" type="Sprite2D" parent="Black/FinalDayScreen"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(576, 176)
+texture = SubResource("GradientTexture2D_0tjx5")
+
+[node name="FinalTextGood" type="RichTextLabel" parent="Black/FinalDayScreen"]
+visible = false
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -140.0
+offset_right = 448.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[color=#999]The air is thick with dread, the impending doom of all you’ve ever known suffocates your mind.
+
+A note suddenly appears: “[color=white]Hoax transmissions infiltrating system, be vigilant.[/color]”
+
+Your sigh of relief is interrupted by another note: “[color=white]You have breached nuclear threat protocol. Position terminated. You dishonour the Motherland.[/color]”
+
+You stand disgraced in the eyes of the Motherland. However, your disobedience has kept the shadows of nuclear retaliation at bay, for now.[/color]"
+fit_content = true
+visible_characters = 0
+visible_characters_behavior = 1
+visible_ratio = 0.0
+
+[node name="FinalTextBad" type="RichTextLabel" parent="Black/FinalDayScreen"]
+visible = false
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -140.0
+offset_right = 448.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[color=#c66]You forward the nuclear threat to your superiors.
+
+The response is instant: “[color=#f99]Engaging nuclear retaliation. ICBM bases 1, 3, and 6 launching.[/color]”
+
+You sit frozen, your breath shallow, as a second note appears: “[color=#f99]Your vigilance and loyalty to the Motherland are duly noted. Wage increased by 1¢.[/color]”
+
+The praise is hollow, swallowed by the dread that consumes you. Your unquestioning obedience has sealed humanity’s grim fate.
+[/color]"
+fit_content = true
+visible_characters_behavior = 1
+
+[node name="Thanks" type="Label" parent="Black/FinalDayScreen"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = 220.0
+offset_right = 256.0
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.695503, 0.695503, 0.695503, 1)
+text = "Thank you for playing!"
+horizontal_alignment = 1
+visible_characters = 0
+visible_characters_behavior = 1
+visible_ratio = 0.0
+
+[node name="TitleScreen" type="Button" parent="Black/FinalDayScreen"]
+process_mode = 3
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -162.0
+offset_top = -36.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.76662, 0.76662, 0.76662, 1)
+text = "TITLE SCREEN"
+
+[node name="FinalAnimation" type="AnimationPlayer" parent="Black/FinalDayScreen"]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_nv1hc")
+}
+next/good_end = &"thanks"
+next/bad_end = &"thanks"
 
 [node name="GUI" type="CanvasLayer" parent="."]
 process_mode = 2
@@ -266,8 +822,13 @@ visible = false
 [connection signal="input_event" from="Screen" to="Screen" method="_on_input_event"]
 [connection signal="mouse_entered" from="Screen" to="Screen" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Screen" to="Screen" method="_on_mouse_exited"]
+[connection signal="task_complete" from="Screen/Viewport/Terminal" to="." method="_on_terminal_task_complete"]
+[connection signal="task_deleted" from="Screen/Viewport/Terminal" to="." method="_on_terminal_task_deleted"]
 [connection signal="alarm_triggered" from="Clock" to="." method="_on_clock_alarm_triggered"]
+[connection signal="pressed" from="Clock/EndDayScreen/EndDayButton" to="." method="end_day"]
 [connection signal="note_picked" from="Board" to="." method="_on_board_note_picked"]
+[connection signal="pressed" from="Black/NewDayScreen/StartDay" to="." method="_on_start_day_pressed"]
+[connection signal="pressed" from="Black/FinalDayScreen/TitleScreen" to="." method="_on_main_menu_pressed"]
 [connection signal="esc_pressed" from="GUI" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="GUI/Container/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="GUI/Container/VBoxContainer/Settings" to="." method="_on_settings_pressed"]

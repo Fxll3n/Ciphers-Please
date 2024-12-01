@@ -18,15 +18,15 @@ linux: $(OUT)/$(NAME)_linux.zip
 
 $(OUT)/$(NAME)_html.zip: $(SCENES)
 	@mkdir -p $(OUT)/html
-	$(GODOT) --path $(PROJECT) --export-release "Web" $(OUT)/html/index.html
+	$(GODOT) --headless --path $(PROJECT) --export-release "Web" $(OUT)/html/index.html
 	zip -jr $@ $(OUT)/html/index.*
 
 $(OUT)/$(NAME)_win.zip: $(SCENES)
-	$(GODOT) --path $(PROJECT) --export-release "Windows Desktop" $(OUT)/$(NAME).exe
+	$(GODOT) --headless --path $(PROJECT) --export-release "Windows Desktop" $(OUT)/$(NAME).exe
 	zip -jr $@ $(OUT)/$(NAME).exe $(OUT)/$(NAME).pck
 
 $(OUT)/$(NAME)_linux.zip: $(SCENES)
-	$(GODOT) --path $(PROJECT) --export-release "Linux" $(OUT)/$(NAME).x86_64
+	$(GODOT) --headless --path $(PROJECT) --export-release "Linux" $(OUT)/$(NAME).x86_64
 	zip -jr $@ $(OUT)/$(NAME).x86_64 $(OUT)/$(NAME).pck
 
 publish_html: html

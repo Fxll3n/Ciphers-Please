@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://bdihic471nx2h"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_4tblp"]
+
+[resource]
+script = ExtResource("1_4tblp")
+msg = "Satellite image suggests \"Lady Liberty\" is nearly operational."
+msg_type = 1
+day = 2
+from_to = "Vladislav Nosov"
+difficulty = 3
+pay = 15
+key = "5"
+cipher_type = 4

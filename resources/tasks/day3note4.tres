@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://b824bpidur74k"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_4pq7w"]
+
+[resource]
+script = ExtResource("1_4pq7w")
+msg = "Dissent growing in Moscow. Soviet movement suggests they are weakening. Hold on strikes, monitor closely."
+msg_type = 2
+day = 3
+conditions = Array[ExtResource("1_4pq7w")]([])
+from_to = "Howard Brown"
+difficulty = 2
+pay = 15
+key = ""
+cipher_type = 2

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Task" load_steps=3 format=3 uid="uid://cgcqbvuvoiriv"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_q1mj4"]
+[ext_resource type="Resource" uid="uid://du5elujq5fbon" path="res://resources/tasks/day3note2.tres" id="2_6eua2"]
+
+[resource]
+script = ExtResource("1_q1mj4")
+msg = "Termination of Yuri Kuznetsov complete. The Motherland will prevail."
+msg_type = 1
+day = 4
+conditions = Array[ExtResource("1_q1mj4")]([ExtResource("2_6eua2")])
+from_to = "Viktor Baranov"
+difficulty = 0
+pay = 5
+key = ""
+cipher_type = 0

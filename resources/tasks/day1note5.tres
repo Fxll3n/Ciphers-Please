@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://bv33dhom8kxrj"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_d3alk"]
+
+[resource]
+script = ExtResource("1_d3alk")
+msg = "They are like us. Like our sons and wives, flesh and blood. The flag you wave is a blindfold. Lower the mast before it's too late."
+msg_type = 1
+day = 1
+from_to = "Yuri Kuznetsov"
+difficulty = 4
+pay = 0
+key = "PRAVDA"
+cipher_type = 3

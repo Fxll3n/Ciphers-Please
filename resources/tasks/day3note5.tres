@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://c3itf3o4qfc0x"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_kdbvl"]
+
+[resource]
+script = ExtResource("1_kdbvl")
+msg = "Western scum scrambling like rats after presidential speech. Government in shambles, President insistent on show of bravado."
+msg_type = 1
+day = 3
+conditions = Array[ExtResource("1_kdbvl")]([])
+from_to = "Vladislav Nosov"
+difficulty = 2
+pay = 8
+key = "10"
+cipher_type = 1

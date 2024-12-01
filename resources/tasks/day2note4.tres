@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://bknrg271ssyj4"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_toenc"]
+
+[resource]
+script = ExtResource("1_toenc")
+msg = "Presidential speech to officials. He says if force is only language Soviets will understand, he is ready to speak loud and clear."
+msg_type = 1
+day = 2
+from_to = "Nikolay Popov"
+difficulty = 1
+pay = 5
+key = ""
+cipher_type = 2

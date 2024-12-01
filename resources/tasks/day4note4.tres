@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://brog2snmmmypm"]
+
+[ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_8nhco"]
+
+[resource]
+script = ExtResource("1_8nhco")
+msg = "Lack of official confirmation on escalation but tensions have eased. Perhaps calm before the storm? Proceed with caution. Remain vigilant."
+msg_type = 1
+day = 4
+conditions = Array[ExtResource("1_8nhco")]([])
+from_to = "Vladislav Nosov"
+difficulty = 2
+pay = 10
+key = ""
+cipher_type = 2

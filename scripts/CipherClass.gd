@@ -1,7 +1,6 @@
 extends Node
 
 class_name Cipher
-
 const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
 static func encryptCaesar(plaintext: String, shifts: int) -> String:
@@ -29,9 +28,9 @@ static func encryptAtbash(plaintext: String) -> String:
 
 static func encryptVigenere(plaintext: String, key: String) -> String:
 	var ciphertext = ""
-	plaintext = plaintext.to_lower()  # Convert to lowercase
-	key = key.to_lower()  # Convert key to lowercase
-	var key_index = 0  # Initialize the key index
+	plaintext = plaintext.to_lower() # Convert to lowercase
+	key = key.to_lower() # Convert key to lowercase
+	var key_index = 0 # Initialize the key index
 
 	for letterNumber in range(plaintext.length()):
 		var current_char = plaintext[letterNumber]
@@ -50,7 +49,6 @@ static func encryptVigenere(plaintext: String, key: String) -> String:
 		key_index += 1
 
 	return ciphertext
-
 
 
 static func encryptRail(plaintext: String, rails: int) -> String:

@@ -51,10 +51,10 @@ theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = SubResource("StyleBoxFlat_0f23h")
 text = "Credits:
 Zeroji: Developer.
-Angle: Developer.
-Isaac: Composer.
-Leo: 3D Artist.
-Sophie: Writer.
+Angel Bitsov: Developer.
+Isaac Sand: Composer.
+LeoEckes: 3D Artist.
+Sophie Short: Writer.
 Saaeb: UI Developer.
 
 Thanks to everyone. ♥"
