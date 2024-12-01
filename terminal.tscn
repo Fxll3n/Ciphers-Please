@@ -134,6 +134,7 @@ layout_mode = 2
 [node name="TextEdit" type="TextEdit" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+context_menu_enabled = false
 wrap_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]

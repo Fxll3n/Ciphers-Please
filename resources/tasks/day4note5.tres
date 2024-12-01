@@ -7,7 +7,7 @@
 script = ExtResource("1_q1mj4")
 msg = "Termination of Yuri Kuznetsov complete. The Motherland will prevail."
 msg_type = 1
-day = 3
+day = 4
 conditions = Array[ExtResource("1_q1mj4")]([ExtResource("2_6eua2")])
 from_to = "Viktor Baranov"
 difficulty = 0

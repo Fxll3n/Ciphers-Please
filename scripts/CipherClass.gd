@@ -1,6 +1,6 @@
 extends Node
 class_name Cipher
-const alphabet = "abcdefghjklmnopqrstuvwxyz"
+const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
 static func encryptCaesar(plaintext: String, shifts: int) -> String:
 	var ciphertext = ""
