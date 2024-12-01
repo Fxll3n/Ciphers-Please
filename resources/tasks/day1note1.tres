@@ -12,4 +12,4 @@ from_to = "Vladislav Nosov"
 difficulty = 2
 pay = 10
 key = "16"
-cipher_type = 4
+cipher_type = 1

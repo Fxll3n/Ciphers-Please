@@ -33,13 +33,15 @@ func load_task(task: Task) -> void:
 		Data.CipherType.Caesar:
 			var note = RichTextLabel.new()
 			NotesContainer.add_child(note)
+			note.fit_content = true
 			note.text = "The \"Ceasar Cipher\" is a monoalphabetic substitution cipher. Meaning it uses only the standard alphabet to substitute letters adn their positions.\nCesar cipher simply moves the letters an \"x\" amount of times to the right."
 			var tool = preload("res://CeasarDisk.tscn")
-			var created_tool = tool .instantiate()
+			var created_tool = tool.instantiate()
 			NotesContainer.add_child(created_tool)
 		Data.CipherType.Vigenere:
 			var note = RichTextLabel.new()
 			NotesContainer.add_child(note)
+			note.fit_content = true
 			note.text = "The Vigenère Cipher is a polyalphabetic substitution cipher that shifts letters using multiple Caesar ciphers with varying keys. A keyword is used to determine the shifts. To decrypt, match each encrypted letter with the corresponding letter of the key to reverse the shift, repeating for the entire message."
 			var table = VigenereTable.new()
 			NotesContainer.add_child(table)
@@ -47,6 +49,7 @@ func load_task(task: Task) -> void:
 		Data.CipherType.Rail:
 			var note = RichTextLabel.new()
 			NotesContainer.add_child(note)
+			note.fit_content = true
 			note.text = "The Rail Fence Cipher is a transposition cipher that arranges text in a zigzag pattern across a set number of \"rails.\" To encrypt, write the text row by row following the zigzag. To decrypt, reconstruct the zigzag pattern and read the text sequentially."
 			var tool = RailTool.new()
 			NotesContainer.add_child(tool)
@@ -55,11 +58,17 @@ func load_task(task: Task) -> void:
 		Data.CipherType.PigPen:
 			var note = RichTextLabel.new()
 			NotesContainer.add_child(note)
+			note.fit_content = true
 			note.text = "The Pigpen Cipher is a substitution cipher that replaces each letter with a symbol based on a simple grid or \"pigpen\" layout. To encrypt, substitute each letter with its corresponding symbol from the grid. To decrypt, reverse the process by matching symbols to their letters in the grid."
 			var img = preload("res://img.tscn")
 			var created_img = img.instantiate()
 			print(created_img)
 			NotesContainer.add_child(created_img)
+		Data.CipherType.Atbash:
+			var note = RichTextLabel.new()
+			NotesContainer.add_child(note)
+			note.fit_content = true
+			note.text = "The Atbash Cipher is a substitution cipher that reverses the alphabet. Each letter is replaced with its opposite: A becomes Z, B becomes Y, and so on. To decrypt, apply the same process since it is symmetric."
 	# text_edit.text = task.expected_text
 
 func unload_task() -> void:
