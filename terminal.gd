@@ -42,12 +42,12 @@ func load_task(task: Task) -> void:
 			var note = RichTextLabel.new()
 			NotesContainer.add_child(note)
 			note.fit_content = true
-			note.text = "The Vigenère Cipher is a polyalphabetic substitution cipher that shifts letters using multiple Caesar ciphers with varying keys. A keyword is used to determine the shifts. To decrypt, match each encrypted letter with the corresponding letter of the key to reverse the shift, repeating for the entire message."
+			note.text = "The Vigenère Cipher is a polyalphabetic substitution cipher that shifts letters using multiple Caesar ciphers with varying keys. To decrypt, match each encrypted letter with the corresponding letter of the key to reverse the shift, repeating for the entire message."
 			var table = VigenereTable.new()
 			table.key = task.key
 			table.encrypt = task.msg_type == Data.MessageType.Outgoing
 			NotesContainer.add_child(table)
-			table.custom_minimum_size = Vector2(300, 500)
+			table.custom_minimum_size = Vector2(300, 400)
 		Data.CipherType.Rail:
 			var note = RichTextLabel.new()
 			NotesContainer.add_child(note)

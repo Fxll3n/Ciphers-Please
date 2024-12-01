@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Task" load_steps=4 format=3 uid="uid://du5elujq5fbon"]
 
 [ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_fpawn"]
-[ext_resource type="Resource" uid="uid://85x6rtnc7ohg" path="res://resources/tasks/day2note5.tres" id="2_v8ht3"]
-[ext_resource type="Resource" uid="uid://bemhrp7doxahy" path="res://resources/tasks/day3note1.tres" id="3_6vp4d"]
+[ext_resource type="Resource" path="res://resources/tasks/day2note5.tres" id="2_v8ht3"]
+[ext_resource type="Resource" path="res://resources/tasks/day3note1.tres" id="3_6vp4d"]
 
 [resource]
 script = ExtResource("1_fpawn")

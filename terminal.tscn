@@ -61,7 +61,7 @@ size_flags_vertical = 0
 
 [node name="MainSplit" type="HSplitContainer" parent="TabBarSplit"]
 layout_mode = 2
-split_offset = 400
+split_offset = 300
 dragger_visibility = 2
 
 [node name="TransmisionSplit" type="VSplitContainer" parent="TabBarSplit/MainSplit"]
