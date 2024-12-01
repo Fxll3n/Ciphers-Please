@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ixscod0rells"]
+
+[ext_resource type="Texture2D" uid="uid://br1sj2adabxwi" path="res://Pigpen_cipher_key.svg.png" id="1_rsfb6"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kjy1n"]
+
+[node name="TextureRect" type="TextureRect"]
+clip_children = 2
+material = SubResource("CanvasItemMaterial_kjy1n")
+custom_minimum_size = Vector2(300, 300)
+offset_right = 320.0
+offset_bottom = 320.0
+texture = ExtResource("1_rsfb6")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 320.0

@@ -95,6 +95,7 @@ script = ExtResource("3_lbevc")
 metadata/_edit_group_ = true
 
 [node name="Viewport" type="SubViewport" parent="Screen"]
+physics_object_picking = true
 
 [node name="Terminal" parent="Screen/Viewport" instance=ExtResource("4_gf7xn")]
 

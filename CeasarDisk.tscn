@@ -8,6 +8,7 @@
 radius = 363.189
 
 [node name="CeasarDisk" type="Node2D"]
+z_index = 5
 position = Vector2(101, 137)
 scale = Vector2(0.36, 0.36)
 script = ExtResource("1_6hk24")

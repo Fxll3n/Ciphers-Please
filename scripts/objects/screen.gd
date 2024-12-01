@@ -32,4 +32,13 @@ func _on_input_event(_camera: Node, event: InputEvent, event_position: Vector3, 
 	if event is InputEventMouse:
 		event.global_position = pos_2d
 	$Viewport.push_input(event)
-	print("ScreenEvent: ", event)
+
+
+
+## Called when the node gains focus
+func _on_focus_gained() -> void:
+	$Viewport.notification(NOTIFICATION_VP_MOUSE_ENTER)
+
+## Called when the node loses focus
+func _on_focus_lost() -> void:
+	$Viewport.notification(NOTIFICATION_VP_MOUSE_EXIT)

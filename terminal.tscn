@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dklsqx8xq8asq"]
+[gd_scene load_steps=3 format=3 uid="uid://dklsqx8xq8asq"]
 
 [ext_resource type="Script" path="res://terminal.gd" id="1_qowvr"]
-[ext_resource type="PackedScene" uid="uid://do8gi6p2vyyv4" path="res://CeasarDisk.tscn" id="2_4tbbl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfhgd"]
 bg_color = Color(0.0431373, 0.0431373, 0.0431373, 0.894118)
@@ -170,9 +169,5 @@ scroll_active = false
 
 [node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="CeasarDisk" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer" instance=ExtResource("2_4tbbl")]
-z_index = 5
-position = Vector2(146, 438)
 
 [connection signal="pressed" from="TabBarSplit/Panel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
