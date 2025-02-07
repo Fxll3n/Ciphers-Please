@@ -27,6 +27,7 @@ enum State {FREE, ZOOM_IN, LOCKED, ZOOM_OUT}
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		$Reticle.visible = (new_state == State.FREE)
 		state = new_state
+		state_changed.emit(state)
 
 @export_group("Controls")
 @export var mouseSensitivity = Vector2(0.2, 0.2)
@@ -38,6 +39,8 @@ enum State {FREE, ZOOM_IN, LOCKED, ZOOM_OUT}
 signal node_clicked(Node3D)
 ## Signal emitted when the camera starts moving toward a new target
 signal focusing(Node3D)
+## Signal emitted when the camera state changes
+signal state_changed(State)
 
 ## List of global transforms to zoom back to
 var origins: Array[Transform3D] = []

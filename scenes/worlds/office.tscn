@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://db6r5vgdyr66y"]
+[gd_scene load_steps=38 format=3 uid="uid://db6r5vgdyr66y"]
 
 [ext_resource type="Script" path="res://scenes/worlds/office.gd" id="1_oqg2a"]
 [ext_resource type="Texture2D" uid="uid://c3yceqft3rl74" path="res://assets/reticle.png" id="3_70pis"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/objects/screen.gd" id="3_lbevc"]
 [ext_resource type="PackedScene" uid="uid://7qlggh5i3318" path="res://assets/scene_gltf/Scene.glb" id="4_7g7d6"]
 [ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://terminal.tscn" id="4_gf7xn"]
+[ext_resource type="Texture2D" uid="uid://bjs60gfyfrahv" path="res://assets/close.png" id="4_nashi"]
 [ext_resource type="PackedScene" uid="uid://tom8wrjo8cvu" path="res://assets/scene_gltf/Wall.glb" id="5_bd2vv"]
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
 [ext_resource type="AudioStream" uid="uid://c76d8xh30brck" path="res://assets/sfx/submitbutton.wav" id="8_orj34"]
@@ -432,6 +433,20 @@ texture = ExtResource("3_70pis")
 [node name="PickedNotePlaceholder" type="Node3D" parent="PlayerCam"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, -0.05, -0.15)
 
+[node name="ZoomOutButton" type="Button" parent="PlayerCam"]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 48.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+icon = ExtResource("4_nashi")
+
 [node name="Scene" parent="." instance=ExtResource("4_7g7d6")]
 
 [node name="Wall" parent="Scene" instance=ExtResource("5_bd2vv")]
@@ -500,6 +515,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="Clock/EndDayScreen"]
 modulate = Color(1, 1, 1, 0.501961)
@@ -816,6 +832,8 @@ text = "Progress will not be saved"
 visible = false
 
 [connection signal="node_clicked" from="PlayerCam" to="." method="_on_player_cam_node_clicked"]
+[connection signal="state_changed" from="PlayerCam" to="." method="_on_player_cam_state_changed"]
+[connection signal="pressed" from="PlayerCam/ZoomOutButton" to="PlayerCam" method="zoom_out"]
 [connection signal="area_entered" from="Screen" to="Screen" method="_on_area_entered"]
 [connection signal="area_exited" from="Screen" to="Screen" method="_on_area_exited"]
 [connection signal="input_event" from="Screen" to="Screen" method="_on_input_event"]

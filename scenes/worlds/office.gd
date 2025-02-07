@@ -41,12 +41,15 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
-	# this is for the pause menu
 	if event.is_action_pressed("Esc"):
-		gui.show()
-		get_tree().paused = true
-		last_mouse_mode = Input.mouse_mode
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		if Camera.state == Camera.State.LOCKED:
+			Camera.zoom_out()
+		else:
+			# Show pause menu
+			gui.show()
+			get_tree().paused = true
+			last_mouse_mode = Input.mouse_mode
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 	if event.is_action_pressed("debug_quit"):
 		# Quickly exit the scene if stuck
@@ -108,6 +111,9 @@ func _on_player_cam_node_clicked(node: Node3D) -> void:
 			if note.task.day == Game.final_day:
 				trashed_final_note = true
 			Game.on_task_trashed()
+
+func _on_player_cam_state_changed(state) -> void:
+	$PlayerCam/ZoomOutButton.visible = (state == Camera.State.LOCKED)
 
 func _on_new_task(task: Task):
 	task.available = true
