@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://but7pckvouk3n"
-path="res://.godot/imported/BottomWheel (1).png-b8f9ddebf634069b305cba532ec71666.ctex"
+uid="uid://cp5xtsce8c0q7"
+path="res://.godot/imported/CaesarTopWheel.png-f9f3ed3f3268549f215fe80bc0157878.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://BottomWheel (1).png"
-dest_files=["res://.godot/imported/BottomWheel (1).png-b8f9ddebf634069b305cba532ec71666.ctex"]
+source_file="res://assets/CaesarTopWheel.png"
+dest_files=["res://.godot/imported/CaesarTopWheel.png-f9f3ed3f3268549f215fe80bc0157878.ctex"]
 
 [params]
 

@@ -8,7 +8,7 @@ class_name Task extends Resource
 @export_range(0, 5, 1) var difficulty: int = 0 ## The difficulty of this task (cosmetic).
 @export_range(0, 100, 1) var pay: int = 0 ## The reward value for how much the player will receive for finishing.
 @export var key: String = "" ## When using a cipher that deals with shifts, put an integer instead of text.
-@export var cipher_type: Data.CipherType = Data.CipherType.Plaintext ## The type of Cipher that will be used, Ceasar's by default.
+@export var cipher_type: Data.CipherType = Data.CipherType.Plaintext ## The type of Cipher that will be used, Caesar's by default.
 
 var unlocked: bool = false: ## Whether the task can be shown
 	get():

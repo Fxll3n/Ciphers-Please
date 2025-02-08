@@ -31,8 +31,8 @@ func load_task(task: Task) -> void:
 	# Properly instantiate the scene based on cipher type
 	match task.cipher_type:
 		Data.CipherType.Caesar:
-			notes_text.text = "The \"Ceasar Cipher\" is a monoalphabetic substitution cipher. Meaning it uses only the standard alphabet to substitute letters adn their positions.\nCesar cipher simply moves the letters an \"x\" amount of times to the right."
-			var tool = preload("res://CeasarDisk.tscn")
+			notes_text.text = "The \"Caesar Cipher\" is a monoalphabetic substitution cipher. Meaning it uses only the standard alphabet to substitute letters and their positions.\nCaesar cipher simply moves the letters an \"x\" amount of times to the right."
+			var tool = preload("res://scenes/CaesarDisk.tscn")
 			var created_tool = tool.instantiate()
 			NotesContainer.add_child(created_tool)
 		Data.CipherType.Vigenere:
@@ -50,7 +50,7 @@ func load_task(task: Task) -> void:
 			tool.create_letter_row()
 		Data.CipherType.PigPen:
 			notes_text.text = "The Pigpen Cipher is a substitution cipher that replaces each letter with a symbol based on a simple grid or \"pigpen\" layout. To encrypt, substitute each letter with its corresponding symbol from the grid. To decrypt, reverse the process by matching symbols to their letters in the grid."
-			var img = preload("res://img.tscn")
+			var img = preload("res://scenes/PigPen.tscn")
 			var created_img = img.instantiate()
 			print(created_img)
 			NotesContainer.add_child(created_img)

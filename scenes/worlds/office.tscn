@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/CustomCamera.gd" id="3_fm5oh"]
 [ext_resource type="Script" path="res://scripts/objects/screen.gd" id="3_lbevc"]
 [ext_resource type="PackedScene" uid="uid://7qlggh5i3318" path="res://assets/scene_gltf/Scene.glb" id="4_7g7d6"]
-[ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://terminal.tscn" id="4_gf7xn"]
+[ext_resource type="PackedScene" uid="uid://dklsqx8xq8asq" path="res://scenes/terminal.tscn" id="4_gf7xn"]
 [ext_resource type="Texture2D" uid="uid://bjs60gfyfrahv" path="res://assets/close.png" id="4_nashi"]
 [ext_resource type="PackedScene" uid="uid://tom8wrjo8cvu" path="res://assets/scene_gltf/Wall.glb" id="5_bd2vv"]
 [ext_resource type="PackedScene" uid="uid://wpohwax5wyl" path="res://scenes/objects/clock.tscn" id="6_4jp77"]
