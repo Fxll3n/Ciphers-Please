@@ -9,6 +9,8 @@ make changes later or decide which art to redo in priority.
 - Stamps for the notes were generated online and require the following attribution:
   `<a href="https://www.textstudio.com/">Font generator</a>`
 
+- [Sono font](https://github.com/sursly/sono/tree/master) uses OFL-1.1 license
+
 ## 3D
 
 ## Audio

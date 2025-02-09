@@ -1,6 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://dklsqx8xq8asq"]
+[gd_scene load_steps=7 format=3 uid="uid://dklsqx8xq8asq"]
 
 [ext_resource type="Script" path="res://scripts/terminal.gd" id="1_qowvr"]
+[ext_resource type="Theme" uid="uid://iqdnjlidyoc2" path="res://assets/terminal_theme.tres" id="1_sirwm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pru4b"]
+bg_color = Color(0.69, 0.1794, 0.1794, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0s1u"]
+bg_color = Color(0.38, 0.0988, 0.0988, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilcrl"]
+bg_color = Color(0.49, 0.1274, 0.1274, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfhgd"]
 bg_color = Color(0.0431373, 0.0431373, 0.0431373, 0.894118)
@@ -11,6 +33,7 @@ anchors_preset = 0
 offset_right = 730.0
 offset_bottom = 648.0
 mouse_filter = 1
+theme = ExtResource("1_sirwm")
 script = ExtResource("1_qowvr")
 
 [node name="TabBarSplit" type="VSplitContainer" parent="."]
@@ -46,18 +69,24 @@ custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+focus_mode = 0
 
 [node name="Minimize" type="Button" parent="TabBarSplit/Panel/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+focus_mode = 0
 
 [node name="Exit" type="Button" parent="TabBarSplit/Panel/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+focus_mode = 0
+theme_override_styles/hover = SubResource("StyleBoxFlat_pru4b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b0s1u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ilcrl")
 
 [node name="MainSplit" type="HSplitContainer" parent="TabBarSplit"]
 layout_mode = 2
@@ -88,12 +117,10 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer"]
 layout_mode = 2
 
-[node name="TransmissionHeading" type="RichTextLabel" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="TransmissionHeading" type="Label" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "[code][font_size=30]Transmission:[/font_size]"
-scroll_active = false
+theme_override_font_sizes/font_size = 24
+text = "Transmission:"
 
 [node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 1/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -123,13 +150,10 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer"]
 layout_mode = 2
 
-[node name="UserEntryHeading" type="RichTextLabel" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="UserEntryHeading" type="Label" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "[code][font_size=30]User Entry
-"
-scroll_active = false
+theme_override_font_sizes/font_size = 24
+text = "User Entry:"
 
 [node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -175,12 +199,10 @@ metadata/_edit_use_anchors_ = true
 [node name="VBoxContainer" type="VBoxContainer" parent="TabBarSplit/MainSplit/Section 3/MarginContainer"]
 layout_mode = 2
 
-[node name="NotesHeading" type="RichTextLabel" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="NotesHeading" type="Label" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "[code][font_size=30]Notes:"
-scroll_active = false
+theme_override_font_sizes/font_size = 24
+text = "Notes:"
 
 [node name="HSeparator" type="HSeparator" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -188,6 +210,10 @@ layout_mode = 2
 [node name="NotesText" type="RichTextLabel" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
 layout_mode = 2
 fit_content = true
+
+[node name="ToolsContainer" type="CenterContainer" parent="TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [connection signal="pressed" from="TabBarSplit/Panel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Submit" to="." method="_on_submit_pressed"]
