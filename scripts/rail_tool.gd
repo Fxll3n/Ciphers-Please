@@ -1,13 +1,11 @@
-extends Control
-class_name RailTool
+class_name RailTool extends CipherTool
 
-# The message to display
-var message: String
 # List to hold references to letter labels
 var letter_labels: Array = []
 
 # Called when the node enters the scene tree for the first time.
-
+func _ready() -> void:
+	create_letter_row()
 
 # Function to create letter labels
 func create_letter_row():

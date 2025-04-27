@@ -9,6 +9,7 @@ extends Control
 @onready var user_entry_heading: Label = $"TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/UserEntryHeading"
 @onready var notes_heading: Label = $"TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer/NotesHeading"
 
+var CaesarScene = preload("res://scenes/CaesarDisk.tscn")
 
 var current_task: Task = null
 
@@ -30,41 +31,40 @@ func load_task(task: Task) -> void:
 	transmission_heading.text = "Input message:" if task.msg_type == Data.MessageType.Outgoing else "Encrypted message:"
 	user_entry_heading.text = "Encrypt message:" if task.msg_type == Data.MessageType.Outgoing else "Decipher message:"
 	notes_heading.text = "Notes: " + Data.GetCipherName(task.cipher_type)
+	text_edit.clear()
+	text_edit.grab_focus()
 	
 	# Remove existing children
 	for child in tools_container.get_children():
 		child.queue_free()
+		
+	var tool: CipherTool = null
 	
 	# Properly instantiate the scene based on cipher type
 	match task.cipher_type:
 		Data.CipherType.Caesar:
 			notes_text.text = "The \"Caesar Cipher\" is a monoalphabetic substitution cipher. Meaning it uses only the standard alphabet to substitute letters and their positions.\nCaesar cipher simply moves the letters an \"x\" amount of times to the right."
-			var tool = preload("res://scenes/CaesarDisk.tscn")
-			var created_tool = tool.instantiate()
-			tools_container.add_child(created_tool)
+			tool = CaesarScene.instantiate()
 		Data.CipherType.Vigenere:
 			notes_text.text = "The Vigenère Cipher is a polyalphabetic substitution cipher that shifts letters using multiple Caesar ciphers with varying keys. To decrypt, match each encrypted letter with the corresponding letter of the key to reverse the shift, repeating for the entire message."
-			var table = VigenereTable.new()
-			table.key = task.key
-			table.encrypt = task.msg_type == Data.MessageType.Outgoing
-			tools_container.add_child(table)
-			table.custom_minimum_size = Vector2(300, 400)
+			tool = VigenereTable.new()
 		Data.CipherType.Rail:
 			notes_text.text = "The Rail Fence Cipher is a transposition cipher that arranges text in a zigzag pattern across a set number of \"rails.\" To encrypt, write the text row by row following the zigzag. To decrypt, reconstruct the zigzag pattern and read the text sequentially."
-			var tool = RailTool.new()
-			tools_container.add_child(tool)
-			tool.message = task.input_text
-			tool.create_letter_row()
+			tool = RailTool.new()
 		Data.CipherType.PigPen:
 			notes_text.text = "The Pigpen Cipher is a substitution cipher that replaces each letter with a symbol based on a simple grid or \"pigpen\" layout. To encrypt, substitute each letter with its corresponding symbol from the grid. To decrypt, reverse the process by matching symbols to their letters in the grid."
-			var img = preload("res://scenes/PigPen.tscn")
-			var created_img = img.instantiate()
-			print(created_img)
-			tools_container.add_child(created_img)
+			tool = PigPen.new()
 		Data.CipherType.Atbash:
 			notes_text.text = "The Atbash Cipher is a substitution cipher that reverses the alphabet. Each letter is replaced with its opposite: A becomes Z, B becomes Y, and so on. To decrypt, apply the same process since it is symmetric."
 		Data.CipherType.Plaintext:
 			notes_text.text = "Plain text message is the least secure form of communication. The input message is the output message."
+			
+	if tool != null:
+		tool.encrypting = (task.msg_type == Data.MessageType.Outgoing)
+		tool.key = task.key
+		tool.message = task.input_text
+		tool.letter_clicked.connect(_on_letter_clicked)
+		tools_container.add_child(tool )
 	# text_edit.text = task.expected_text
 
 func unload_task() -> void:
@@ -88,3 +88,6 @@ func _on_submit_pressed() -> void:
 func _on_trash_pressed() -> void:
 	if current_task != null:
 		task_deleted.emit()
+
+func _on_letter_clicked(letter: String) -> void:
+	text_edit.insert_text_at_caret(letter)

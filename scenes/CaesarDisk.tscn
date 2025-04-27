@@ -1,45 +1,167 @@
-[gd_scene load_steps=7 format=3 uid="uid://do8gi6p2vyyv4"]
+[gd_scene load_steps=12 format=3 uid="uid://do8gi6p2vyyv4"]
 
-[ext_resource type="Script" path="res://CaesarDisk.gd" id="1_6hk24"]
-[ext_resource type="Texture2D" uid="uid://but7pckvouk3n" path="res://assets/CaesarBottomWheel.png" id="2_ypccl"]
-[ext_resource type="Texture2D" uid="uid://cp5xtsce8c0q7" path="res://assets/CaesarTopWheel.png" id="3_5gnnd"]
-[ext_resource type="FontFile" uid="uid://dnkeqwoqftiar" path="res://assets/fonts/veteran typewriter.ttf" id="4_abvl7"]
+[ext_resource type="Shader" path="res://scripts/CaesarDisk.gdshader" id="1_46t3a"]
+[ext_resource type="Script" path="res://scripts/CaesarDisk.gd" id="1_xo68u"]
+[ext_resource type="Texture2D" uid="uid://but7pckvouk3n" path="res://assets/CaesarBottomWheel.png" id="2_8f5fh"]
+[ext_resource type="Texture2D" uid="uid://cp5xtsce8c0q7" path="res://assets/CaesarTopWheel.png" id="3_2tvr4"]
+[ext_resource type="FontFile" uid="uid://dnkeqwoqftiar" path="res://assets/fonts/veteran typewriter.ttf" id="4_na58e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cyio2"]
+shader = ExtResource("1_46t3a")
+shader_parameter/hue_shift = 0.8
+shader_parameter/sat_mul = 0.8
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a54ji"]
 radius = 363.189
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2w4hc"]
+radius = 233.35
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a684t"]
+radius = 138.0
+
 [sub_resource type="LabelSettings" id="LabelSettings_whduv"]
-font = ExtResource("4_abvl7")
-font_size = 96
+font = ExtResource("4_na58e")
+font_size = 48
 font_color = Color(0.0253486, 0.166073, 0.386203, 1)
 
-[node name="CaesarDisk" type="Node2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_p7642"]
+font = ExtResource("4_na58e")
+font_size = 24
+font_color = Color(0.0253486, 0.166073, 0.386203, 1)
+
+[node name="CaesarDisk" type="Control"]
 z_index = 5
-position = Vector2(144, 384)
-scale = Vector2(0.36, 0.36)
-script = ExtResource("1_6hk24")
+material = SubResource("ShaderMaterial_cyio2")
+custom_minimum_size = Vector2(370, 370)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 370.0
+offset_bottom = 370.0
+mouse_filter = 1
+script = ExtResource("1_xo68u")
+key = "16"
 
 [node name="BottomWheel" type="Sprite2D" parent="."]
 z_index = -1
+use_parent_material = true
+position = Vector2(185, 185)
 rotation = 0.000735998
-texture = ExtResource("2_ypccl")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_8f5fh")
+
+[node name="Hint" type="Node2D" parent="BottomWheel"]
+z_index = 1
+use_parent_material = true
+
+[node name="Decrypt" type="Polygon2D" parent="BottomWheel/Hint"]
+visible = false
+use_parent_material = true
+color = Color(0.0823529, 0.317647, 0.454902, 1)
+polygon = PackedVector2Array(-20.1796, -243.985, -2.19281, -261.998, 15.8204, -244.012, 11.8234, -240.009, -2.18692, -253.998, -16.1766, -239.988)
+
+[node name="Encrypt" type="Polygon2D" parent="BottomWheel/Hint"]
+z_index = 1
+use_parent_material = true
+color = Color(0.0823529, 0.317647, 0.454902, 1)
+polygon = PackedVector2Array(-16.1869, -253.988, -2.17664, -239.998, 11.8131, -254.009, 15.816, -250.012, -2.17075, -231.998, -20.184, -249.985)
 
 [node name="TopWheel" type="Sprite2D" parent="."]
-texture = ExtResource("3_5gnnd")
+z_index = -1
+use_parent_material = true
+position = Vector2(185, 185)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_2tvr4")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Hint" type="Node2D" parent="TopWheel"]
+z_index = 1
+use_parent_material = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="Decrypt1" type="Polygon2D" parent="TopWheel/Hint"]
+visible = false
+use_parent_material = true
+polygon = PackedVector2Array(-16, -228, -2, -242, 12, -228)
+
+[node name="Encrypt1" type="Polygon2D" parent="TopWheel/Hint"]
+use_parent_material = true
+position = Vector2(0, 6)
+polygon = PackedVector2Array(-18, -244, 14, -244, -2, -228)
+
+[node name="Decrypt2" type="Polygon2D" parent="TopWheel/Hint"]
+visible = false
+use_parent_material = true
+color = Color(0.0823529, 0.317647, 0.454902, 1)
+polygon = PackedVector2Array(-12, -232, -2, -242, 8, -232, 16, -232, -2, -250, -20, -232)
+
+[node name="Encrypt2" type="Polygon2D" parent="TopWheel/Hint"]
+use_parent_material = true
+color = Color(0.0823529, 0.317647, 0.454902, 1)
+polygon = PackedVector2Array(-12, -232, -2, -222, 8, -232, 16, -232, -2, -214, -20, -232)
+
+[node name="OutsideArea" type="Area2D" parent="."]
+position = Vector2(185, 185)
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutsideArea"]
 visible = false
 shape = SubResource("CircleShape2D_a54ji")
 
-[node name="Label" type="Label" parent="."]
-offset_left = -111.0
-offset_right = 111.0
-offset_bottom = 133.0
-text = "1"
+[node name="InsideArea" type="Area2D" parent="."]
+position = Vector2(185, 185)
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InsideArea"]
+visible = false
+shape = SubResource("CircleShape2D_2w4hc")
+
+[node name="CenterArea" type="Area2D" parent="."]
+position = Vector2(185, 185)
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CenterArea"]
+shape = SubResource("CircleShape2D_a684t")
+
+[node name="NumberLabel" type="Label" parent="."]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_right = 112.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "26
+"
 label_settings = SubResource("LabelSettings_whduv")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[node name="KeyLabel" type="Label" parent="."]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -64.0
+offset_right = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Key:"
+label_settings = SubResource("LabelSettings_p7642")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="input_event" from="OutsideArea" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="OutsideArea" to="." method="_on_outside_area_mouse_entered"]
+[connection signal="mouse_exited" from="OutsideArea" to="." method="_on_outside_area_mouse_exited"]
+[connection signal="mouse_entered" from="InsideArea" to="." method="_on_inside_area_mouse_entered"]
+[connection signal="mouse_exited" from="InsideArea" to="." method="_on_inside_area_mouse_exited"]
+[connection signal="mouse_entered" from="CenterArea" to="." method="_on_center_area_mouse_entered"]
+[connection signal="mouse_exited" from="CenterArea" to="." method="_on_center_area_mouse_exited"]
