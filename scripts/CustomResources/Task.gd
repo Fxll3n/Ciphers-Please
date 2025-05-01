@@ -55,7 +55,7 @@ func get_ciphertext() -> String:
 		Data.CipherType.Rail:
 			return Cipher.encryptRail(msg, int(key))
 		Data.CipherType.PigPen:
-			return "[font=res://assets/fonts/PigpenCipher.otf]" + msg
+			return "[font=res://assets/fonts/PigpenCipher.otf]" + Cipher.stripNonLetters(msg, ' \n')
 		_:
 			breakpoint
 			return ""

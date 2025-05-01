@@ -164,6 +164,21 @@ size_flags_vertical = 3
 context_menu_enabled = false
 wrap_mode = 1
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MessageProgress" type="ProgressBar" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.001
+
+[node name="Autofill" type="Button" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Unlocked at 20%"
+disabled = true
+text = "FILL"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
@@ -216,5 +231,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [connection signal="pressed" from="TabBarSplit/Panel/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="text_changed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer2/Autofill" to="." method="_on_autofill_pressed"]
 [connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Submit" to="." method="_on_submit_pressed"]
 [connection signal="pressed" from="TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Trash" to="." method="_on_trash_pressed"]

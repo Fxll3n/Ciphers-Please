@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://c4y8acpxpo2yf"]
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://c2iqk8f8sv5j2"]
 
 [ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_gx41h"]
 
 [resource]
 script = ExtResource("1_gx41h")
-msg = "Top secret, America’s secret weapon is alien technology! President has allied with extraterrestrials after moon landing, keep a close eye on Area 51!"
+msg = "Top secret, Americas secret weapon is alien technology! President has allied with extraterrestrials after moon landing, keep a close eye on Area fifty one!"
 msg_type = 1
 day = 4
 conditions = Array[ExtResource("1_gx41h")]([])

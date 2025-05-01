@@ -9,9 +9,21 @@ extends Control
 @onready var user_entry_heading: Label = $"TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/UserEntryHeading"
 @onready var notes_heading: Label = $"TabBarSplit/MainSplit/Section 3/MarginContainer/VBoxContainer/NotesHeading"
 
+@onready var message_progress: ProgressBar = $"TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer2/MessageProgress"
+@onready var autofill_button: Button = $"TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer2/Autofill"
+@onready var submit_button: Button = $"TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Submit"
+@onready var trash_button: Button = $"TabBarSplit/MainSplit/TransmisionSplit/Section 2/MarginContainer/VBoxContainer/HBoxContainer/Trash"
+
+
 var CaesarScene = preload("res://scenes/CaesarDisk.tscn")
 
 var current_task: Task = null
+var validator: Validator = null
+var autofill_used: bool = false
+
+const autofill_unlock_ratio: float = 0.20
+const submit_unlock_ratio: float = 0.90
+const autofill_speed: float = 12 # letters per second
 
 ## Emitted when the terminal is closed
 signal terminal_closed
@@ -65,14 +77,24 @@ func load_task(task: Task) -> void:
 		tool.message = task.input_text
 		tool.letter_clicked.connect(_on_letter_clicked)
 		tools_container.add_child(tool )
-	# text_edit.text = task.expected_text
+	
+	validator = Validator.new()
+	validator.expected = current_task.expected_text
+	text_edit.syntax_highlighter = validator
+	autofill_used = false
 
 func unload_task() -> void:
 	if current_task != null:
 		transmission_text.text = ''
 		text_edit.text = ''
+		notes_heading.text = "Notes:"
 		notes_text.text = ''
 		current_task = null
+		validator = null
+		message_progress.value = 0
+		autofill_button.disabled = true
+		submit_button.disabled = true
+		trash_button.disabled = true
 
 	# Remove existing children
 	for child in tools_container.get_children():
@@ -80,6 +102,10 @@ func unload_task() -> void:
 
 func _on_exit_pressed() -> void:
 	terminal_closed.emit()
+
+func _on_autofill_pressed() -> void:
+	if current_task != null:
+		autofill_start()
 
 func _on_submit_pressed() -> void:
 	if current_task != null:
@@ -90,4 +116,42 @@ func _on_trash_pressed() -> void:
 		task_deleted.emit()
 
 func _on_letter_clicked(letter: String) -> void:
-	text_edit.insert_text_at_caret(letter)
+	if text_edit.editable:
+		text_edit.insert_text_at_caret(letter)
+
+func _on_text_edit_text_changed() -> void:
+	if current_task != null:
+		var ratio = validator.similarity_index
+		message_progress.value = ratio
+		autofill_button.disabled = autofill_used or ratio < autofill_unlock_ratio
+		submit_button.disabled = ratio < submit_unlock_ratio
+		trash_button.disabled = ratio < submit_unlock_ratio
+
+func autofill_start() -> void:
+	if current_task == null or autofill_used:
+		return
+	autofill_button.disabled = true
+	autofill_used = true
+	validator.show_highlight = true
+	var start = validator.last_index
+	var end = current_task.expected_text.length()
+	if start >= end:
+		# Trigger updates to force highlight refresh
+		validator.update_cache()
+		text_edit.grab_focus()
+		return
+	text_edit.editable = false
+	var tween = get_tree().create_tween()
+	var duration = (end - start) / autofill_speed
+	tween.tween_method(autofill_update.bind(text_edit.text, start), start, end, duration)
+	tween.tween_callback(autofill_finished)
+
+func autofill_update(index: int, initial_text: String, start_index: int):
+	if current_task != null:
+		var new_text = initial_text + current_task.expected_text.substr(start_index, index - start_index)
+		if new_text != text_edit.text:
+			text_edit.text = new_text
+			_on_text_edit_text_changed.call_deferred()
+
+func autofill_finished() -> void:
+	text_edit.editable = true

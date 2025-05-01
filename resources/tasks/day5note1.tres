@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://gfxgtd0mw4i1"]
+[gd_resource type="Resource" script_class="Task" load_steps=2 format=3 uid="uid://drt264wlcbt18"]
 
 [ext_resource type="Script" path="res://scripts/CustomResources/Task.gd" id="1_h1vdp"]
 
